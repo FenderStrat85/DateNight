@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import { login } from '../api/api';
+import { useDispatch, useSelector } from 'react-redux';
 
 function LoginScreen(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   let userInfo;
 
@@ -24,6 +25,9 @@ function LoginScreen(props) {
         userInfo = item;
         userInfo.token = true;
         console.log(userInfo);
+        if (userInfo._id) {
+          dispatch({ type: 'LOGIN', payload: userInfo });
+        }
       });
   };
 

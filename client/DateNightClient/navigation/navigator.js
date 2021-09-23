@@ -6,10 +6,21 @@ import HomeScreen from '../screens/HomeScreen';
 import SpinnerScreen from '../screens/SpinnerScreen';
 import RestaurantListScreen from '../screens/RestaurantListScreen';
 import RestaurantItemScreen from '../screens/RestaurantItemScreen';
+import { useSelector } from 'react-redux';
+import LoginScreen from '../screens/LoginScreen';
 
+const RootStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
 
-function MainNavigator() {
+function RootNavigator() {
+  return (
+    <RootStack.Navigator>
+      <RootStack.Screen name="Login" component={LoginScreen} />
+    </RootStack.Navigator>
+  );
+}
+
+function ScreenNavigator() {
   return (
     <MainStack.Navigator>
       <MainStack.Screen name="Home" component={HomeScreen} />
@@ -23,6 +34,21 @@ function MainNavigator() {
         component={RestaurantItemScreen}
       />
     </MainStack.Navigator>
+  );
+}
+
+function MainNavigator() {
+  //state accesses the root reducer object, which contains the user object
+  //where authentication is checked
+  const loggedInUser = useSelector((state) => state.user);
+  return (
+    <NavigationContainer>
+      {loggedInUser.isAuthenticated == false ? (
+        <RootNavigator />
+      ) : (
+        <ScreenNavigator />
+      )}
+    </NavigationContainer>
   );
 }
 
