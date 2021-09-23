@@ -39,7 +39,13 @@ function LoginScreen(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: email, password: password }),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((item) => {
+        userInfo = item;
+        console.log(userInfo);
+        dispatch({ type: 'REGISTER', payload: item });
+      });
   };
 
   return (

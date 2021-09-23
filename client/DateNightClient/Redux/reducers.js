@@ -12,6 +12,13 @@ const reducer = (state = initialState, action) => {
         isAuthenticated: true,
         userRestaurants: action.payload.restaurants,
       };
+    case 'REGISTER':
+      console.log('I am in the reducer');
+      return {
+        ...state,
+        isAuthenticated: true,
+        userRestaurants: action.payload.restaurants,
+      };
     default:
       return state;
   }
