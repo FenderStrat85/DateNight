@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { login } from '../api/api';
 
 function LoginScreen(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  // const dispatch = useDispatch();
+
+  let userInfo;
 
   const login = (email, password) => {
     return fetch('http://192.168.1.66:3005/login', {
@@ -13,7 +18,13 @@ function LoginScreen(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: email, password: password }),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((item) => {
+        userInfo = item;
+        userInfo.token = true;
+        console.log(userInfo);
+      });
   };
 
   const register = (email, password) => {

@@ -42,7 +42,7 @@ const login = async (req, res) => {
     } else {
       req.session.uid = user._id;
       console.log(user);
-      res.status(200).send(user.restaurants);
+      res.status(200).send(user);
     }
   } catch (error) {
     res.status(500).send({ error, message: 'User not found' });

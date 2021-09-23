@@ -10,7 +10,7 @@ const RootStack = createNativeStackNavigator();
 
 export default function App() {
   // const [isLoading, setIsLoading]
-  const userToken = true;
+  const userToken = null;
   return (
     <NavigationContainer>
       {userToken == null ? (
@@ -20,20 +20,6 @@ export default function App() {
       ) : (
         <MainNavigator />
       )}
-      {/* <Stack.Navigator>
-        {state.userToken == null ? (
-          <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          // options={{ title: 'Still no tracking' }}
-          />
-          ) : (
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Spinner" component={SpinnerScreen} />
-            <Stack.Screen name="RestaurantList" component={RestaurantListScreen} />
-            )}
-          </Stack.Navigator>
-          <StatusBar style="auto" /> */}
     </NavigationContainer>
   );
 }
