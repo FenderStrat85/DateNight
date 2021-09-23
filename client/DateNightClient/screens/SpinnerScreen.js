@@ -6,7 +6,7 @@ function SpinnerScreen(props) {
     <View style={styles.container}>
       <Text>This is the new login screen in the screens folder</Text>
       <Button
-        title="Go to restaurant"
+        title="Go to restaurant list"
         onPress={() => props.navigation.navigate('RestaurantList')}
       />
     </View>

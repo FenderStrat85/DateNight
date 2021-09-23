@@ -4,28 +4,36 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
-import SpinnerScreen from './screens/SpinnerScreen';
-import RestaurantListScreen from './screens/RestaurantListScreen';
+import MainNavigator from './navigation/navigator';
 
-const RootStackScreen = createNativeStackNavigator();
-const Stack = createNativeStackNavigator();
+const RootStack = createNativeStackNavigator();
 
 export default function App() {
   // const [isLoading, setIsLoading]
+  const userToken = true;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
+      {userToken == null ? (
+        <RootStack.Navigator>
+          <RootStack.Screen name="Login" component={LoginScreen} />
+        </RootStack.Navigator>
+      ) : (
+        <MainNavigator />
+      )}
+      {/* <Stack.Navigator>
+        {state.userToken == null ? (
+          <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{ title: 'Still no tracking' }}
-        />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Spinner" component={SpinnerScreen} />
-        <Stack.Screen name="RestaurantList" component={RestaurantListScreen} />
-      </Stack.Navigator>
-      <StatusBar style="auto" />
+          // options={{ title: 'Still no tracking' }}
+          />
+          ) : (
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Spinner" component={SpinnerScreen} />
+            <Stack.Screen name="RestaurantList" component={RestaurantListScreen} />
+            )}
+          </Stack.Navigator>
+          <StatusBar style="auto" /> */}
     </NavigationContainer>
   );
 }

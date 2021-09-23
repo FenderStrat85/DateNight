@@ -6,7 +6,7 @@ function HomeScreen(props) {
     <View style={styles.container}>
       <Text>This is the new home screen</Text>
       <Button
-        title="Lets spin to find some dinner"
+        title="Lets use the spinner to find some dinner"
         onPress={() => props.navigation.navigate('Spinner')}
       />
     </View>

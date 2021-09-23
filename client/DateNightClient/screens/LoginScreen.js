@@ -34,9 +34,11 @@ function LoginScreen(props) {
         <TextInput
           style={styles.textInput}
           placeholder="Email Address"
+          keyboardType="email-address"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
+          errorMessage="Please enter a valid email address"
         />
       </View>
       <View style={styles.inputView}>
@@ -46,6 +48,7 @@ function LoginScreen(props) {
           value={password}
           onChangeText={setPassword}
           autoCapitalize="none"
+          secureTextEntry
         />
       </View>
       <Button title="Sign In" onPress={() => login(email, password)} />
@@ -83,6 +86,7 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     fontSize: 20,
+    width: '80%',
   },
 });
 

@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
-function RestaurantListScreen() {
+function RestaurantListScreen(props) {
   return (
     <View style={styles.container}>
       <Text>This is the new restaurant list screen</Text>
+      <Button
+        title="Lets click on a restaurant"
+        onPress={() => props.navigation.navigate('RestaurantItem')}
+      ></Button>
     </View>
   );
 }
