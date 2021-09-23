@@ -6,13 +6,16 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  TextInput,
 } from 'react-native';
-
+import InputComponent from '../components/InputComponent';
 import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
 
 function HomeScreen(props) {
   const [isFetching, setIsFetching] = useState();
+  //state management for typed location given by user
+  const [userTypedLocation, setUserTypedLocation] = useState();
+  //state management for location returned from expo
   const [selectedLocation, setSelectedLocation] = useState();
 
   const verifyPermissions = async () => {
@@ -28,7 +31,7 @@ function HomeScreen(props) {
     return true;
   };
 
-  const getLocationHandler = async () => {
+  const getCurrentLocationHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
       return;
@@ -40,6 +43,10 @@ function HomeScreen(props) {
         timeout: 5000,
       });
       console.log(location);
+      setSelectedLocation({
+        lat: location.coords.latitude,
+        long: location.coords.longitude,
+      });
     } catch (error) {
       Alert.alert('Could not fetch location, please try again later', [
         { text: 'Okay' },
@@ -47,21 +54,65 @@ function HomeScreen(props) {
     }
     setIsFetching(false);
   };
+
+  const getSelectedLocationHandler = async () => {
+    console.log(userTypedLocation);
+    try {
+      setIsFetching(true);
+      const location = await Location.geocodeAsync(userTypedLocation, {
+        timeout: 5000,
+      });
+      console.log(location);
+      setSelectedLocation({
+        lat: location[0].latitude,
+        long: location[0].longitude,
+      });
+      console.log(selectedLocation);
+      setIsFetching(false);
+    } catch (error) {
+      Alert.alert(
+        `Could not fetch location, maybe it doesn't exist, or you have a typo!`,
+        [{ text: 'Okay' }],
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.mapPreview}></View>
+      <Button
+        title="Get Current Location"
+        onPress={getCurrentLocationHandler}
+      />
+      <View>
+        <Text>User Searches for a specific location</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Search for a specific location!"
+          autoCapitalize="none"
+          value={userTypedLocation}
+          onChangeText={setUserTypedLocation}
+        />
+        <Button
+          title="Get my chosen location"
+          onPress={getSelectedLocationHandler}
+        />
+      </View>
       <View>
         {isFetching ? (
-          <ActivityIndicator />
+          <ActivityIndicator size="large" />
         ) : (
           <Text>No Location Chosen Yet</Text>
         )}
       </View>
-      <Button title="Get Location" onPress={getLocationHandler} />
-      <Button
-        title="Lets use the spinner to find some dinner"
-        onPress={() => props.navigation.navigate('Spinner')}
-      />
+      {selectedLocation ? (
+        <Button
+          title="Lets use the spinner to find some dinner"
+          onPress={() => props.navigation.navigate('Spinner')}
+        />
+      ) : (
+        <Text>We need a location first I'm afraid!</Text>
+      )}
     </View>
   );
 }
@@ -70,8 +121,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#ccc',
     marginBottom: 15,
   },
   mapPreview: {
@@ -80,6 +130,11 @@ const styles = StyleSheet.create({
     height: 250,
     borderColor: '#ccc',
     borderWidth: 1,
+  },
+  textInput: {
+    width: '100%',
+    padding: 10,
+    fontSize: 20,
   },
 });
 
