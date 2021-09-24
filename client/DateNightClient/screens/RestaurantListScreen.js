@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+// import env from 'react-native-dotenv';
+import { MESSAGE } from '@env';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
@@ -8,8 +10,25 @@ function RestaurantListScreen(props) {
     props.route.params.paramKey.chosenLocation,
   );
 
+  const getRestaurantsHandler = () => {
+    console.log(MESSAGE);
+  };
+
+  // const getRestaurantsHandler = async () => {
+  //   let response = await fetch(
+  //
+  //   );
+  //   let json = await response.json();
+  //   console.log(json);
+  //   console.log('inside get request');
+  // };
+
   return (
     <View style={styles.container}>
+      <Button
+        title={`Click on me to find some awesome ${selectedCuisine} restaurants!`}
+        onPress={() => getRestaurantsHandler()}
+      />
       <Text>This is the new restaurant list screen</Text>
       <Text>{selectedCuisine}</Text>
       <Button

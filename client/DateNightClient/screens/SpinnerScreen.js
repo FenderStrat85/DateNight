@@ -51,22 +51,6 @@ function SpinnerScreen(props) {
     //setting button to be try again seems to allow the spinner to re-render with
     //no issues
     <View style={styles.container}>
-      {winnerIndex ? (
-        <Button
-          title="Go to restaurant list"
-          onPress={() =>
-            props.navigation.navigate('RestaurantList', {
-              paramKey: {
-                selectedCuisine: winnerValue,
-                chosenLocation: location,
-              },
-            })
-          }
-        />
-      ) : (
-        <Text>Click the button to help find a restaurant</Text>
-      )}
-
       <WheelOfFortune options={wheelOptions} />
 
       {/* <Button
@@ -90,6 +74,23 @@ function SpinnerScreen(props) {
         ) : (
           <Text>No winners yet....</Text>
         )}
+        {/* </View>
+      <View > */}
+        {winnerIndex ? (
+          <Button
+            title="Go to restaurant list"
+            onPress={() =>
+              props.navigation.navigate('RestaurantList', {
+                paramKey: {
+                  selectedCuisine: winnerValue,
+                  chosenLocation: location,
+                },
+              })
+            }
+          />
+        ) : (
+          <Text>Click the button to help find a restaurant</Text>
+        )}
       </View>
     </View>
   );
@@ -102,8 +103,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   controlView: {
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 50,
-    marginBottom: 150,
+    marginBottom: 50,
     borderWidth: 1,
     padding: 5,
     borderRadius: 10,

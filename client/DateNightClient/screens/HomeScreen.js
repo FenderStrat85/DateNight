@@ -12,6 +12,9 @@ import InputComponent from '../components/InputComponent';
 import * as Location from 'expo-location';
 
 function HomeScreen(props) {
+  //need to add functionality to get selected radius from user
+  //this will be passed through params
+
   const [isFetching, setIsFetching] = useState();
   //state management for typed location given by user
   const [userTypedLocation, setUserTypedLocation] = useState();

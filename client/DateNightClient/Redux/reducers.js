@@ -1,5 +1,5 @@
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   userRestaurants: null,
 };
 
