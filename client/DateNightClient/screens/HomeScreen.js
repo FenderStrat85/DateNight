@@ -20,6 +20,8 @@ function HomeScreen(props) {
   const [userTypedLocation, setUserTypedLocation] = useState();
   //state management for location returned from expo
   const [selectedLocation, setSelectedLocation] = useState();
+  //state management for distance from destination
+  const [distance, setDistance] = useState();
 
   const verifyPermissions = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -87,8 +89,9 @@ function HomeScreen(props) {
         title="Get Current Location"
         onPress={getCurrentLocationHandler}
       />
-      <View>
-        <Text>User Searches for a specific location</Text>
+      <View style={styles.chooseLocation}>
+        <Text>Don't want to use you current location?</Text>
+        <Text>Please enter a town, postcode, station etc</Text>
         <TextInput
           style={styles.textInput}
           placeholder="Search for a specific location!"
@@ -108,12 +111,23 @@ function HomeScreen(props) {
           <Text>No Location Chosen Yet</Text>
         )}
       </View>
-      {selectedLocation ? (
+      <View style={styles.chooseDistance}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Please enter a distance in metres"
+          value={distance}
+          onChangeText={setDistance}
+        />
+      </View>
+      {selectedLocation && distance ? (
         <Button
           title="Lets use the spinner to find some dinner"
           onPress={() =>
             props.navigation.navigate('Spinner', {
-              paramKey: selectedLocation,
+              paramKey: {
+                selectedLocation: selectedLocation,
+                distance: distance,
+              },
             })
           }
         />
@@ -137,6 +151,12 @@ const styles = StyleSheet.create({
     height: 250,
     borderColor: '#ccc',
     borderWidth: 1,
+  },
+  chooseLocation: {
+    backgroundColor: '#fff',
+  },
+  chooseDistance: {
+    backgroundColor: 'orange',
   },
   textInput: {
     width: '100%',

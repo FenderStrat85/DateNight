@@ -9,14 +9,15 @@ function SpinnerScreen(props) {
 
   //location passed from previous screen. Will be attached to params as
   //chosenLocation to be accessed in restaurant list screen
-  const location = props.route.params.paramKey;
+  const location = props.route.params.paramKey.selectedLocation;
+  const distance = props.route.params.paramKey.distance;
   // console.log(location);
 
   const participants = [
     'Chinese',
     'Japanese',
     'Thai',
-    'Vi et',
+    'Viet',
     'British',
     'French',
     'American',
@@ -84,6 +85,7 @@ function SpinnerScreen(props) {
                 paramKey: {
                   selectedCuisine: winnerValue,
                   chosenLocation: location,
+                  chosenDistance: distance,
                 },
               })
             }
