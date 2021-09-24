@@ -28,7 +28,9 @@ function SpinnerScreen(props) {
     textAngle: 'horizontal',
     knobSource: require('../assets/images/knob.png'),
     getWinner: (value, index) => {
-      // console.log(JSON.stringify(this));
+      //WheelOfFortuneComponent uses class components not functional.
+      //Therefore setState did not work.
+      //created state of winner index and value that could be updated up finishing of spin.
       console.log({ value });
       console.log({ index });
       //this.setState is for a class component, but using a functional component,
@@ -43,32 +45,39 @@ function SpinnerScreen(props) {
     //setting button to be try again seems to allow the spinner to re-render with
     //no issues
     <View style={styles.container}>
+      {winnerIndex ? (
+        <Button
+          title="Go to restaurant list"
+          onPress={() => props.navigation.navigate('RestaurantList')}
+        />
+      ) : (
+        <Text>Click the button to help find a restaurant</Text>
+      )}
+
       <WheelOfFortune options={wheelOptions} />
+
       {/* <Button
         title="Press me"
         onPress={() => {
           this.child._onPress();
         }}
       /> */}
-
-      <Button
-        title="Spin again"
-        onPress={() => {
-          this.child._tryAgain();
-        }}
-      />
-      {winnerIndex && winnerValue ? (
-        <Text>
-          We have a winnerIndex:{winnerIndex} and we have a winnerValue
-          {winnerValue}
-        </Text>
-      ) : (
-        <Text>No winners yet....</Text>
-      )}
-      <Button
-        title="Go to restaurant list"
-        onPress={() => props.navigation.navigate('RestaurantList')}
-      />
+      <View style={styles.controlView}>
+        <Button
+          title="Spin me"
+          onPress={() => {
+            this.child._tryAgain();
+          }}
+        />
+        {winnerIndex && winnerValue ? (
+          <Text>
+            We have a winnerIndex:{winnerIndex} and we have a winnerValue
+            {winnerValue}
+          </Text>
+        ) : (
+          <Text>No winners yet....</Text>
+        )}
+      </View>
     </View>
   );
 }
@@ -76,9 +85,16 @@ function SpinnerScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#ccc',
+    alignItems: 'center',
+  },
+  controlView: {
+    marginTop: 50,
+    marginBottom: 150,
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 10,
+    borderColor: 'black',
   },
 });
 
