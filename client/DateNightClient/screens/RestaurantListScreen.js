@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
+  console.log(
+    'location in RestaurantListScreen',
+    props.route.params.paramKey.chosenLocation,
+  );
 
   return (
     <View style={styles.container}>

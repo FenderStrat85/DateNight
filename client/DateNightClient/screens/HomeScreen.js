@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import InputComponent from '../components/InputComponent';
 import * as Location from 'expo-location';
-import { useDispatch } from 'react-native';
 
 function HomeScreen(props) {
   const [isFetching, setIsFetching] = useState();
@@ -109,7 +108,11 @@ function HomeScreen(props) {
       {selectedLocation ? (
         <Button
           title="Lets use the spinner to find some dinner"
-          onPress={() => props.navigation.navigate('Spinner')}
+          onPress={() =>
+            props.navigation.navigate('Spinner', {
+              paramKey: selectedLocation,
+            })
+          }
         />
       ) : (
         <Text>We need a location first I'm afraid!</Text>

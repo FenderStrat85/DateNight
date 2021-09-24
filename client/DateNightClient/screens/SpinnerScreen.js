@@ -6,6 +6,12 @@ import WheelOfFortune from 'react-native-wheel-of-fortune';
 function SpinnerScreen(props) {
   const [winnerValue, setWinnerValue] = useState('');
   const [winnerIndex, setWinnerIndex] = useState('');
+
+  //location passed from previous screen. Will be attached to params as
+  //chosenLocation to be accessed in restaurant list screen
+  const location = props.route.params.paramKey;
+  // console.log(location);
+
   const participants = [
     'Chinese',
     'Japanese',
@@ -50,7 +56,10 @@ function SpinnerScreen(props) {
           title="Go to restaurant list"
           onPress={() =>
             props.navigation.navigate('RestaurantList', {
-              paramKey: { selectedCuisine: winnerValue },
+              paramKey: {
+                selectedCuisine: winnerValue,
+                chosenLocation: location,
+              },
             })
           }
         />
