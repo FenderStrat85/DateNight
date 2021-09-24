@@ -2,9 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 function RestaurantListScreen(props) {
+  const selectedCuisine = props.route.params.paramKey.selectedCuisine;
+
   return (
     <View style={styles.container}>
       <Text>This is the new restaurant list screen</Text>
+      <Text>{selectedCuisine}</Text>
       <Button
         title="Lets click on a restaurant"
         onPress={() => props.navigation.navigate('RestaurantItem')}

@@ -48,7 +48,11 @@ function SpinnerScreen(props) {
       {winnerIndex ? (
         <Button
           title="Go to restaurant list"
-          onPress={() => props.navigation.navigate('RestaurantList')}
+          onPress={() =>
+            props.navigation.navigate('RestaurantList', {
+              paramKey: { selectedCuisine: winnerValue },
+            })
+          }
         />
       ) : (
         <Text>Click the button to help find a restaurant</Text>

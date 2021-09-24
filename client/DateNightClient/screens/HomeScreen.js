@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import InputComponent from '../components/InputComponent';
 import * as Location from 'expo-location';
+import { useDispatch } from 'react-native';
 
 function HomeScreen(props) {
   const [isFetching, setIsFetching] = useState();
