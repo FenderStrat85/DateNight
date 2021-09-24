@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 function RestaurantItemScreen(props) {
   return (
     <View style={styles.container}>
-      <Text>This is the new restaurant item screen</Text>
+      <Text>{props.route.params.paramKey.name}</Text>
     </View>
   );
 }

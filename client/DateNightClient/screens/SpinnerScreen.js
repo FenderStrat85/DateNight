@@ -14,10 +14,10 @@ function SpinnerScreen(props) {
   // console.log(location);
 
   const participants = [
-    'Chinese',
+    'Try Again',
     'Japanese',
     'Thai',
-    'Viet',
+    'Chinese',
     'British',
     'French',
     'American',

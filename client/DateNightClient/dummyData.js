@@ -1,4 +1,4 @@
-export const data = {
+const DATA = {
   html_attributions: [],
   next_page_token:
     'Aap_uEACumC11eLX_pXxMckK033o7B5SG6L1YbHQNf-TahyEpLQHWsOXTYfgPhYNfmacziCXdqlfFJbBpbNXTeaHESqc7D6VnQc2CvWBm3UxCV0xJd6iFzlMykLqgWbrmliR1wnUDI3cWPTtq--4uaGjOdQcS1NPKJ6XPxhRmIIWGCjVIAnpFZGd1TjaawLpOd8SsQx07Bqa_1_AVHH7WQ2agSut5sNtmkgPbVyoGsml-qKZXkzQwfNkbUVHXNU-uXgiJcDZiBI-HPPjjh3nz94hSWBLi_7pvZhisns8YYnw1IYHdq9Z7aMOzdaY9Tk6Lp6JZBoWQv2X_USAKKpLSFULzB17cv5lWsNYHCaNYOxrFLvTYWGGrM2oADWpRRXLEU75scpuFp8T2j5wFQUtpV_A1QeNFqgPyQkzjEit39xTFSVvqM7nosKQcA4A_hr6WSqNUqi5o40CMQ',
@@ -1056,3 +1056,5 @@ export const data = {
   ],
   status: 'OK',
 };
+
+export default DATA;
