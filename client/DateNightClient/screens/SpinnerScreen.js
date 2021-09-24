@@ -7,15 +7,15 @@ function SpinnerScreen(props) {
   const [winnerValue, setWinnerValue] = useState('');
   const [winnerIndex, setWinnerIndex] = useState('');
   const participants = [
-    '%10',
-    '%20',
-    '%30',
-    '%40',
-    '%50',
-    '%60',
-    '%70',
-    '%90',
-    'FREE',
+    'Chinese',
+    'Japanese',
+    'Thai',
+    'Vi et',
+    'British',
+    'French',
+    'American',
+    'Italian',
+    'Spanish',
   ];
   const wheelOptions = {
     rewards: participants,
@@ -40,12 +40,21 @@ function SpinnerScreen(props) {
     onRef: (ref) => (this.child = ref),
   };
   return (
+    //setting button to be try again seems to allow the spinner to re-render with
+    //no issues
     <View style={styles.container}>
       <WheelOfFortune options={wheelOptions} />
-      <Button
+      {/* <Button
         title="Press me"
         onPress={() => {
           this.child._onPress();
+        }}
+      /> */}
+
+      <Button
+        title="Spin again"
+        onPress={() => {
+          this.child._tryAgain();
         }}
       />
       {winnerIndex && winnerValue ? (
