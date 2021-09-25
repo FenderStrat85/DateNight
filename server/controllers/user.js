@@ -49,9 +49,14 @@ const login = async (req, res) => {
   }
 };
 
-const save = async (req, res) => {
+const saveRestaurant = async (req, res) => {
   try {
-    console.log('inside save function');
+    const { user_id, restaurantData } = req.body;
+    const user = await User.findOne({ user_id });
+    user.restaurants.push(restaurantData);
+    await user.save();
+    console.log(user.restaurants);
+    res.status(200).send(user.restaurants);
   } catch (error) {
     console.log(error);
   }
@@ -73,6 +78,6 @@ const logout = async (req, res) => {
 module.exports = {
   create,
   login,
-  save,
+  saveRestaurant,
   logout,
 };

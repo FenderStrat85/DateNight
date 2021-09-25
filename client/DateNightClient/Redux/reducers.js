@@ -22,6 +22,11 @@ const reducer = (state = initialState, action) => {
         userRestaurants: action.payload.restaurants,
         user_id: action.payload._id,
       };
+    case 'SAVE_RESTAURANT':
+      return {
+        ...state,
+        userRestaurants: action.payload,
+      };
     default:
       return state;
   }
