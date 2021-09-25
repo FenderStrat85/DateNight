@@ -49,6 +49,18 @@ function RestaurantListScreen(props) {
     setRestaurantList(resArr);
   };
 
+  const sortByRating = () => {
+    let copy = [...restaurantList];
+    copy.sort((a, b) => b.rating - a.rating);
+    setRestaurantList(copy);
+  };
+
+  const sortByPrice = () => {
+    let copy = [...restaurantList];
+    copy.sort((a, b) => a.price_level - b.price_level);
+    setRestaurantList(copy);
+  };
+
   const renderRestaurantGrid = (itemData) => {
     return (
       <View style={styles.gridItem}>
@@ -58,15 +70,21 @@ function RestaurantListScreen(props) {
             props.navigation.navigate('RestaurantItem', {
               paramKey: {
                 name: itemData.item.name,
-                //need address link
-                //rating
-                //price
+                price: itemData.item.price_level,
+                totalRatings: itemData.item.user_ratings_total,
+                rating: itemData.item.rating,
+                mapLink: itemData.item.photos.html_attributions,
+                photo: itemData.item.photos.photo_reference,
               },
             })
           }
         >
           <View style={styles.containerItem}>
-            <Text>{itemData.item.name}</Text>
+            <View style={styles.titleText}>
+              <Text>{itemData.item.name}</Text>
+            </View>
+            <Text>Price: {itemData.item.price_level}</Text>
+            <Text>Rating: {itemData.item.rating}/4</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -90,12 +108,20 @@ function RestaurantListScreen(props) {
           <Button title="Params check" onPress={paramsCheck} />
         </View>
       ) : (
-        <FlatList
-          keyExtractor={(item, index) => item.place_id}
-          data={restaurantList}
-          renderItem={renderRestaurantGrid}
-          // numColumns={2}
-        />
+        <View>
+          <View style={styles.buttonContainer}>
+            <Button title="Sort by price" onPress={() => sortByPrice()} />
+            <Button title="Sort by rating" onPress={() => sortByRating()} />
+          </View>
+          <View styles={styles.flatListContainer}>
+            <FlatList
+              keyExtractor={(item, index) => item.place_id}
+              data={restaurantList}
+              renderItem={renderRestaurantGrid}
+              // numColumns={2}
+            />
+          </View>
+        </View>
       )}
     </View>
   );
@@ -105,15 +131,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'orange',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  // flatListContainer: {
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   gridItem: {
     margin: 15,
     height: 150,
     width: '80%',
     // overflow: 'hidden',
   },
+  titleText: { borderColor: 'black', borderWidth: 1 },
+
   containerItem: {
     flex: 1,
     backgroundColor: 'pink',
