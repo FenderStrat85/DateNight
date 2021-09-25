@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/models');
+const { User, Restaurant } = require('../models/models');
 
 const create = async (req, res) => {
   const { email, password } = req.body;
@@ -24,12 +24,14 @@ const create = async (req, res) => {
 
 const login = async (req, res) => {
   console.log('inside login function');
-  console.log(req.body);
   try {
     const { email, password } = req.body;
-    console.log(email);
-    console.log(password);
     const user = await User.findOne({ email });
+    const restaurantArray = [];
+    user.restaurants.map(async (item) => {
+      const restaurant = await Restaurant.findOne({ photo: item });
+      restaurantArray.push(restaurant);
+    });
     if (!user) {
       console.log('user does not exist');
       throw new Error();
@@ -41,7 +43,7 @@ const login = async (req, res) => {
       throw new Error();
     } else {
       req.session.uid = user._id;
-      console.log(user);
+      user.restaurants = restaurantArray;
       res.status(200).send(user);
     }
   } catch (error) {
@@ -52,15 +54,49 @@ const login = async (req, res) => {
 const saveRestaurant = async (req, res) => {
   try {
     const { user_id, restaurantData } = req.body;
-    const user = await User.findOne({ user_id });
-    user.restaurants.push(restaurantData);
-    await user.save();
-    console.log(user.restaurants);
-    res.status(200).send(user.restaurants);
+    console.log('save restaurant - user_id', user_id);
+    const user = await User.findOne({ _id: user_id });
+    console.log(user);
+    const isSaved = user.restaurants.find((id) => id === restaurantData.photo);
+    console.log(isSaved);
+    if (isSaved) {
+      return res.status(402).send(restaurantData);
+    }
+    user.restaurants.push(restaurantData.photo);
+    user.save();
+    const restaurant = await Restaurant.findOne({
+      photo: restaurantData.photo,
+    });
+    if (!restaurant) {
+      const restaurant = Restaurant.create({
+        name: restaurantData.name,
+        photo: restaurantData.photo,
+      });
+    }
+
+    // const restaurants = user.restaurants
+    // const updatedRestaurants = [...restaurants, restaurantData.photo]
+    // const res = await MyModel.update({ user_id }, { restaurants. });
+    // user.restaurants.push(restaurantData);
+    // await user.save();
+    console.log('user.restaurants', user.restaurants);
+    res.status(200).send(restaurantData);
   } catch (error) {
     console.log(error);
   }
 };
+//needs endpoint - id of restaurant = photo property on restaurant
+//filter restaurants array to remove based on the photo property
+
+// const deleteRestaurant = async (req, res) => {
+//   try {
+//     const { user_id, restaurantData } = req.body;
+//     const user = await User.findOne({ user_id });
+//     // user.restaurants.
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 const logout = async (req, res) => {
   req.session.destroy((error) => {
@@ -79,5 +115,6 @@ module.exports = {
   create,
   login,
   saveRestaurant,
+  // deleteRestaurant,
   logout,
 };

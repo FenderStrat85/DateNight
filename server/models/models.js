@@ -12,10 +12,32 @@ const userSchema = new Schema({
     required: true,
   },
   restaurants: {
-    type: [{}],
+    type: Array,
+    ref: 'Restaurant.photo',
   },
 });
 
-const User = mongoose.model('User', userSchema);
+userSchema.virtual('data', {
+  ref: 'Restaurant', // The model to use
+  localField: 'restaurants', // Find people where `localField`
+  foreignField: 'photo', // is equal to `foreignField`
+  // If `justOne` is true, 'members' will be a single doc as opposed to
+  // an array. `justOne` is false by default.
+  justOne: false,
+});
 
-module.exports = User;
+const restaurantSchema = new Schema({
+  name: String,
+  photo: String,
+  // isSaved: Boolean,
+  // latitude: Number,
+  //need to add all properties
+});
+
+const User = mongoose.model('User', userSchema);
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+
+module.exports = {
+  User,
+  Restaurant,
+};

@@ -86,7 +86,7 @@ function RestaurantListScreen(props) {
               <Text>{itemData.item.name}</Text>
             </View>
             <Text>Price: {itemData.item.price_level}</Text>
-            <Text>Rating: {itemData.item.rating}/4</Text>
+            <Text>Rating: {itemData.item.rating}/5</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -141,10 +141,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // flatListContainer: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
   gridItem: {
     margin: 15,
     height: 150,
@@ -152,7 +148,6 @@ const styles = StyleSheet.create({
     // overflow: 'hidden',
   },
   titleText: { borderColor: 'black', borderWidth: 1 },
-
   containerItem: {
     flex: 1,
     backgroundColor: 'pink',

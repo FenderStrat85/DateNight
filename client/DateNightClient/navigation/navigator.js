@@ -2,15 +2,20 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSelector } from 'react-redux';
 import HomeScreen from '../screens/HomeScreen';
 import SpinnerScreen from '../screens/SpinnerScreen';
 import RestaurantListScreen from '../screens/RestaurantListScreen';
 import RestaurantItemScreen from '../screens/RestaurantItemScreen';
-import { useSelector } from 'react-redux';
 import LoginScreen from '../screens/LoginScreen';
+import SavedRestaurantListScreen from '../screens/SavedRestaurantListScreen';
+import SavedRestaurantItemScreen from '../screens/SavedRestaurantItemScreen';
 
 const RootStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
+const SaveStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function RootNavigator() {
   return (
@@ -20,6 +25,8 @@ function RootNavigator() {
   );
 }
 
+//when navigating between screens in a stack the name referenced in the navigation page
+//is the one the must be passed into props.navigation.navigate()
 function ScreenNavigator() {
   return (
     <MainStack.Navigator>
@@ -43,6 +50,21 @@ function ScreenNavigator() {
   );
 }
 
+function SavedStackNavigator() {
+  return (
+    <SaveStack.Navigator>
+      <SaveStack.Screen
+        name="Your Saved Restaurants"
+        component={SavedRestaurantListScreen}
+      />
+      <SaveStack.Screen
+        name="SavedRestaurantItemScreen"
+        component={SavedRestaurantItemScreen}
+      />
+    </SaveStack.Navigator>
+  );
+}
+
 function MainNavigator() {
   //state accesses the root reducer object, which contains the user object
   //where authentication is checked
@@ -52,7 +74,14 @@ function MainNavigator() {
       {loggedInUser.isAuthenticated == false ? (
         <RootNavigator />
       ) : (
-        <ScreenNavigator />
+        // <ScreenNavigator />
+        <Tab.Navigator>
+          <Tab.Screen name="Choose Restaurants" component={ScreenNavigator} />
+          <Tab.Screen
+            name="Saved Restaurants"
+            component={SavedStackNavigator}
+          />
+        </Tab.Navigator>
       )}
     </NavigationContainer>
   );

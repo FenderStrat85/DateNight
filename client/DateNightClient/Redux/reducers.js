@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
     case 'SAVE_RESTAURANT':
       return {
         ...state,
-        userRestaurants: action.payload,
+        userRestaurants: [...state.userRestaurants, action.payload],
       };
     default:
       return state;

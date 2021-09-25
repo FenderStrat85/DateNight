@@ -114,6 +114,7 @@ function HomeScreen(props) {
       <View style={styles.chooseDistance}>
         <TextInput
           style={styles.textInput}
+          keyboardType="numeric"
           placeholder="Please enter a distance in metres"
           value={distance}
           onChangeText={setDistance}

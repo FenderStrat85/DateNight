@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import ImagePreview from '../components/ImagePreview';
 import MapPreview from '../components/MapPreview';
-import { API_KEY } from '@env';
+import { API_KEY, BACKEND_SERVER } from '@env';
 import RestaurantListScreen from './RestaurantListScreen';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,28 +10,35 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import { useDispatch, useSelector } from 'react-redux';
 
 function RestaurantItemScreen(props) {
+  //current method of toggling button
   const [isSaved, setIsSaved] = useState(false);
 
   const dispatch = useDispatch();
 
+  //params received from restaurantListScreen that need to be passed to map and image previews
   let imageToken = props.route.params.paramKey.photo;
   let restaurantLong = props.route.params.paramKey.longitude;
   let restaurantLat = props.route.params.paramKey.latitude;
 
+  //data used to check for existence of restaurant in redux state if doesn't exist is passed to db
   const user_id = useSelector((state) => state.user.user_id);
+  const savedRestaurants = useSelector((state) => state.user.userRestaurants);
   const restaurantData = props.route.params.paramKey;
 
   const saveRestaurant = (user_id, restaurantData) => {
-    console.log(props.route.params.paramKey);
-    //need to send this restaurant data to database
-    console.log(user_id);
-    if (isSaved) {
-      setIsSaved(false);
-    } else {
-      setIsSaved(true);
-    }
+    // savedRestaurants.forEach((item) => {
+    //   if (
+    //     item.name === restaurantData.name &&
+    //     item.longitude === restaurantData.longitude &&
+    //     item.latitude === restaurantData.latitude
+    //   ) {
+    //     alert('You have already saved this restaurant!');
+    //   } else {
+    //     if (!isSaved) {
+    //       setIsSaved(true);
+    //     }
 
-    return fetch('http://192.168.1.66:3005/save', {
+    return fetch(`${BACKEND_SERVER}/save`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -45,9 +52,12 @@ function RestaurantItemScreen(props) {
       .then((res) => res.json())
       .then((item) => {
         let restaurantInfo = item;
-        console.log(restaurantInfo);
         dispatch({ type: 'SAVE_RESTAURANT', payload: restaurantInfo });
-      });
+      })
+      .catch((error) => console.log(error));
+    // }
+
+    //need to send this restaurant data to database
   };
 
   React.useLayoutEffect(() => {
