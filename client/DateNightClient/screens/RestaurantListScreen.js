@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { API_KEY, MESSAGE } from '@env';
 import DATA from '../dummyData';
-import RestaurantListTile from '../components/RestaurantListTile';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
@@ -73,8 +72,11 @@ function RestaurantListScreen(props) {
                 price: itemData.item.price_level,
                 totalRatings: itemData.item.user_ratings_total,
                 rating: itemData.item.rating,
-                mapLink: itemData.item.photos.html_attributions,
-                photo: itemData.item.photos.photo_reference,
+                mapLink: itemData.item.photos[0].html_attributions,
+                photo: itemData.item.photos[0].photo_reference,
+                openNow: itemData.item.opening_hours.open_now,
+                longitude: itemData.item.geometry.location.lng,
+                latitude: itemData.item.geometry.location.lat,
               },
             })
           }
