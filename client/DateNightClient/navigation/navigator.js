@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
@@ -28,10 +28,16 @@ function ScreenNavigator() {
       <MainStack.Screen
         name="RestaurantList"
         component={RestaurantListScreen}
+        options={({ route }) => ({
+          title: `${route.params.paramKey.selectedCuisine} restaurants`,
+        })}
       />
       <MainStack.Screen
         name="RestaurantItem"
         component={RestaurantItemScreen}
+        options={({ route }) => ({
+          title: route.params.paramKey.name,
+        })}
       />
     </MainStack.Navigator>
   );

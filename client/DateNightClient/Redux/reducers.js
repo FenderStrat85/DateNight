@@ -1,6 +1,7 @@
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   userRestaurants: null,
+  user_id: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         userRestaurants: action.payload.restaurants,
+        user_id: action.payload._id,
       };
     case 'REGISTER':
       console.log('I am in the reducer');
@@ -18,6 +20,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         userRestaurants: action.payload.restaurants,
+        user_id: action.payload._id,
       };
     default:
       return state;

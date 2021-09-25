@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^12.0.5",
     "@popmotion/popcorn": "^0.4.4",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
@@ -15,6 +16,7 @@
     "dotenv": "^10.0.0",
     "expo": "^42.0.3",
     "expo-app-loading": "^1.1.2",
+    "expo-font": "~9.2.1",
     "expo-location": "~12.1.2",
     "expo-permissions": "~12.1.1",
     "expo-status-bar": "~1.0.4",
@@ -24,13 +26,14 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-dotenv": "^3.2.0",
+    "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-svg": "12.1.1",
     "react-native-web": "~0.13.12",
     "react-native-wheel-of-fortune": "^1.5.4",
-    "react-redux": "^7.2.5",
-    "expo-font": "~9.2.1"
+    "react-navigation-header-buttons": "^9.0.0",
+    "react-redux": "^7.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

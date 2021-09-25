@@ -49,6 +49,14 @@ const login = async (req, res) => {
   }
 };
 
+const save = async (req, res) => {
+  try {
+    console.log('inside save function');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const logout = async (req, res) => {
   req.session.destroy((error) => {
     if (error) {
@@ -65,5 +73,6 @@ const logout = async (req, res) => {
 module.exports = {
   create,
   login,
+  save,
   logout,
 };

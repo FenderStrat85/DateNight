@@ -7,6 +7,7 @@ router.post('/register', controllers.create);
 //login - post - return saved restaurants
 router.post('/login', controllers.login);
 //save put / delete
+// router.post('save', controllers.saveRestaurant);
 //logout post
 router.post('/logout', authMiddleware, controllers.logout);
 
