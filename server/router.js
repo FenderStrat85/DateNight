@@ -9,7 +9,8 @@ router.post('/login', controllers.login);
 //save
 router.post('/save', controllers.saveRestaurant);
 //delete
-// router.delete('/delete', controllers.deleteRestaurant);
+//id in this case being the photo code that we have created as the id for the linked db
+router.delete('/delete/:id', controllers.deleteRestaurant);
 //logout post
 router.post('/logout', authMiddleware, controllers.logout);
 

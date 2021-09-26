@@ -29,8 +29,14 @@ userSchema.virtual('data', {
 const restaurantSchema = new Schema({
   name: String,
   photo: String,
+  latitude: Number,
+  longitude: Number,
+  maplink: Array,
+  openNow: Boolean,
+  price: Number,
+  rating: Number,
+  totalRatings: Number,
   // isSaved: Boolean,
-  // latitude: Number,
   //need to add all properties
 });
 

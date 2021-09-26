@@ -44,6 +44,8 @@ const login = async (req, res) => {
     } else {
       req.session.uid = user._id;
       user.restaurants = restaurantArray;
+      console.log('user info at login', user);
+      console.log('users restaurants', user.restaurants);
       res.status(200).send(user);
     }
   } catch (error) {
@@ -71,6 +73,13 @@ const saveRestaurant = async (req, res) => {
       const restaurant = Restaurant.create({
         name: restaurantData.name,
         photo: restaurantData.photo,
+        price: restaurantData.price,
+        totalRatings: restaurantData.totalRatings,
+        rating: restaurantData.rating,
+        mapLink: restaurantData.mapLink,
+        openNow: restaurantData.openNow,
+        longitude: restaurantData.longitude,
+        latitude: restaurantData.latitude,
       });
     }
 
@@ -80,6 +89,7 @@ const saveRestaurant = async (req, res) => {
     // user.restaurants.push(restaurantData);
     // await user.save();
     console.log('user.restaurants', user.restaurants);
+    console.log('full user profile line 92 - save function', user);
     res.status(200).send(restaurantData);
   } catch (error) {
     console.log(error);
@@ -88,15 +98,26 @@ const saveRestaurant = async (req, res) => {
 //needs endpoint - id of restaurant = photo property on restaurant
 //filter restaurants array to remove based on the photo property
 
-// const deleteRestaurant = async (req, res) => {
-//   try {
-//     const { user_id, restaurantData } = req.body;
-//     const user = await User.findOne({ user_id });
-//     // user.restaurants.
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+const deleteRestaurant = async (req, res) => {
+  console.log('I am in the delete function');
+  try {
+    const { user_id } = req.body;
+    const { id } = req.params;
+    const user = await User.findOne({ _id: user_id });
+    console.log(user);
+    console.log('restaurant list before update', user.restaurants);
+    console.log(id);
+    const updatedRestaurants = user.restaurants.filter(
+      (restaurant) => restaurant !== id,
+    );
+    console.log('updatedRestaurants', updatedRestaurants);
+    user.restaurants = updatedRestaurants;
+    user.save();
+    res.status(200).send(user.restaurants);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const logout = async (req, res) => {
   req.session.destroy((error) => {
@@ -115,6 +136,6 @@ module.exports = {
   create,
   login,
   saveRestaurant,
-  // deleteRestaurant,
+  deleteRestaurant,
   logout,
 };

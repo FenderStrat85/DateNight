@@ -13,11 +13,36 @@ function SavedRestaurantItemScreen(props) {
   let restaurantLat = props.route.params.paramKey.latitude;
 
   const user_id = useSelector((state) => state.user.user_id);
+  const resDataFromReducer = useSelector((state) => state.user.userRestaurants);
   const restaurantData = props.route.params.paramKey;
 
-  const deleteRestaurant = (user_id, restaurantData) => {
-    alert('delete button works!');
-    //  fetch(`${BACKEND_SERVER}/delete`, );
+  const dispatch = useDispatch();
+
+  const deleteRestaurant = (user_id, resId) => {
+    fetch(`${BACKEND_SERVER}/delete/${resId}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((item) => {
+        let updatedRestaurantInfo = item;
+        console.log(
+          'updatedRestaurantInfo in savedItemScreen',
+          updatedRestaurantInfo,
+        );
+        console.log(
+          'display of restaurant dat from reducer',
+          resDataFromReducer,
+        );
+        dispatch({ type: 'DELETE_RESTAURANT', payload: updatedRestaurantInfo });
+      })
+      .catch((error) => console.log(error));
   };
 
   React.useLayoutEffect(() => {
@@ -27,7 +52,7 @@ function SavedRestaurantItemScreen(props) {
           <Item
             title="button"
             iconName={'trash-outline'}
-            onPress={() => deleteRestaurant(user_id, restaurantData)}
+            onPress={() => deleteRestaurant(user_id, restaurantData.photo)}
           />
         </HeaderButtons>
       ),
