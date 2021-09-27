@@ -7,9 +7,14 @@ import {
   ActivityIndicator,
   Alert,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+  FlatList,
 } from 'react-native';
-import InputComponent from '../components/InputComponent';
+import InputSpinner from 'react-native-input-spinner';
 import * as Location from 'expo-location';
+// import InputComponent from '../components/InputComponent';
+// import MapPreview from '../components/MapPreview';
 
 function HomeScreen(props) {
   //need to add functionality to get selected radius from user
@@ -92,7 +97,10 @@ function HomeScreen(props) {
   const resetCuisineHandler = () => {
     setCuisineToPass([]);
   };
-  //text input field for cuisine does not work. I have no clue why
+
+  const renderCuisineChoice = (itemData) => {
+    return <Text> {itemData.item} </Text>;
+  };
   return (
     <View style={styles.container}>
       {cuisineToPass.length === 7 ? (
@@ -113,7 +121,15 @@ function HomeScreen(props) {
           <Text>{cuisineToPass.length}</Text>
         </View>
       )}
-      <View style={styles.mapPreview}></View>
+      <View style={styles.cuisinePreview}>
+        <Text>You have chosen</Text>
+        <FlatList
+          keyExtractor={(item, index) => index}
+          data={cuisineToPass}
+          numColumns={2}
+          renderItem={renderCuisineChoice}
+        />
+      </View>
       <Button
         title="Get Current Location"
         onPress={getCurrentLocationHandler}
@@ -141,12 +157,14 @@ function HomeScreen(props) {
         )}
       </View>
       <View style={styles.chooseDistance}>
-        <TextInput
-          style={styles.textInput}
-          keyboardType="numeric"
-          placeholder="Please enter a distance in metres"
+        <InputSpinner
+          max={20}
+          min={0}
+          step={1}
+          colorMax={'#f04048'}
+          colorMin={'#40c5f4'}
           value={distance}
-          onChangeText={setDistance}
+          onChange={setDistance}
         />
       </View>
       {selectedLocation && distance && cuisineToPass.length === 7 ? (
@@ -178,19 +196,31 @@ const styles = StyleSheet.create({
   },
   chooseCuisineType: {
     backgroundColor: 'pink',
+    borderColor: 'black',
+    borderWidth: 1,
   },
-  mapPreview: {
+  cuisinePreview: {
     marginBottom: 10,
     width: '100%',
-    height: 250,
-    borderColor: '#ccc',
+    height: 100,
+    borderColor: 'black',
     borderWidth: 1,
   },
   chooseLocation: {
     backgroundColor: '#fff',
   },
   chooseDistance: {
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
+    width: '80%',
+    height: 50,
+    marginTop: 20,
+    marginBottom: 20,
+    height: 30,
+  },
+  distanceTextInput: {
+    width: '100%',
+    fontSize: 20,
+    padding: 10,
   },
   textInput: {
     width: '100%',
