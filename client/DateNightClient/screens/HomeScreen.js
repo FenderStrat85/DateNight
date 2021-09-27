@@ -14,8 +14,9 @@ import * as Location from 'expo-location';
 function HomeScreen(props) {
   //need to add functionality to get selected radius from user
   //this will be passed through params
-  const [selectedCuisine, setSelectedCuisine] = React.useState();
+  const [selectedCuisine, setSelectedCuisine] = useState();
   const [cuisineToPass, setCuisineToPass] = useState([]);
+
   const [isFetching, setIsFetching] = useState();
   //state management for typed location given by user
   const [userTypedLocation, setUserTypedLocation] = useState();
@@ -83,16 +84,11 @@ function HomeScreen(props) {
     }
   };
 
-  let cuisineArray = [];
-  // console.log(cuisineArray);
-
   const cuisineChoiceHandler = () => {
-    cuisineArray.push(selectedCuisine);
-    setCuisineToPass(...cuisineToPass, selectedCuisine);
-    console.log('cuisineToPass', cuisineToPass);
-
+    setCuisineToPass([...cuisineToPass, selectedCuisine]);
     setSelectedCuisine();
   };
+
   //text input field for cuisine does not work. I have no clue why
   return (
     <View style={styles.container}>
@@ -106,6 +102,11 @@ function HomeScreen(props) {
         />
         <Button title="Submit Cuisine" onPress={cuisineChoiceHandler} />
       </View>
+      {cuisineToPass.length === 7 ? (
+        <Text>Woo hoo we have 7 cuisinese!</Text>
+      ) : (
+        <Text>{cuisineToPass.length}</Text>
+      )}
       <View style={styles.mapPreview}></View>
       <Button
         title="Get Current Location"
@@ -150,6 +151,7 @@ function HomeScreen(props) {
               paramKey: {
                 selectedLocation: selectedLocation,
                 distance: distance,
+                cuisines: cuisineToPass,
               },
             })
           }

@@ -10,19 +10,32 @@ function SpinnerScreen(props) {
   //location passed from previous screen. Will be attached to params as
   //chosenLocation to be accessed in restaurant list screen
   const location = props.route.params.paramKey.selectedLocation;
-  const distance = props.route.params.paramKey.distance;
-  // console.log(location);
+  const distance = props.route.params.paramKey.distance * 1000;
+  const cuisines = props.route.params.paramKey.cuisines;
+
+  console.log('cuisines passed from home screen', cuisines);
+
+  // const participants = [
+  //   'Try Again',
+  //   'Japanese',
+  //   'Thai',
+  //   'Chinese',
+  //   'British',
+  //   'French',
+  //   'American',
+  //   'Italian',
+  //   'Spanish',
+  // ];
 
   const participants = [
     'Try Again',
-    'Japanese',
-    'Thai',
-    'Chinese',
-    'British',
-    'French',
-    'American',
-    'Italian',
-    'Spanish',
+    cuisines[0].toString(),
+    cuisines[1].toString(),
+    cuisines[2].toString(),
+    cuisines[3].toString(),
+    cuisines[4].toString(),
+    cuisines[5].toString(),
+    cuisines[6].toString(),
   ];
   const wheelOptions = {
     rewards: participants,
