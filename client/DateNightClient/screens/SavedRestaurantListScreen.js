@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,19 +10,50 @@ import {
 import { useSelector } from 'react-redux';
 
 function SavedRestaurantListScreen(props) {
-  const userRestaurants = useSelector((state) => state.user.userRestaurants);
+  //sets initial state
+  let userRestaurants = useSelector((state) => {
+    console.log(
+      'SvedRestaurantListScreen userRestaurant list from reducer',
+      state.user.userRestaurants,
+    );
+    return state.user.userRestaurants;
+  });
   const [restaurantList, setRestaurantList] = useState(userRestaurants);
 
-  console.log('userRestaurant list', userRestaurants);
+  console.log(
+    'SavedRestaurantListScreen userRestaurants.length',
+    userRestaurants.length,
+  );
+  // useEffect(() => {
+  //   console.log('restaurantList before being updated', restaurantList);
+  //   console.log(
+  //     'useEffect(): identifying that that the userRestaurants have changed',
+  //   );
+  //   setRestaurantList(userRestaurants);
+  //   console.log(
+  //     'restaurantList after being set to updated user restaurants',
+  //     restaurantList,
+  //   );
+  // }, [userRestaurants]);
 
+  // console.log('restaurantList from state', restaurantList);
+
+  // sort by rating using state
   const sortByRating = () => {
-    let copy = [...restaurantList];
+    const copy = [...restaurantList];
     copy.sort((a, b) => b.rating - a.rating);
     setRestaurantList(copy);
   };
 
+  //sort by rating using redux
+  // const sortByRating = () => {
+  //   const copy = [...userRestaurants];
+  //   copy.sort((a, b) => b.rating - a.rating);
+  // };
+
+  //sort by rating using price
   const sortByPrice = () => {
-    let copy = [...restaurantList];
+    const copy = [...restaurantList];
     copy.sort((a, b) => a.price - b.price);
     setRestaurantList(copy);
   };
@@ -62,23 +93,26 @@ function SavedRestaurantListScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text>
-        This is the saved restaurant list screen - the users saved restaurants
-        will be rendered here
-      </Text>
-      <Button
-        title="Click me to move to next screen"
-        onPress={() => props.navigation.navigate('SavedRestaurantItemScreen')}
-      />
-      <View style={styles.buttonContainer}>
-        <Button title="Sort by price" onPress={() => sortByPrice()} />
-        <Button title="Sort by rating" onPress={() => sortByRating()} />
-      </View>
-      <FlatList
-        keyExtractor={(item, index) => item.photo}
-        data={restaurantList}
-        renderItem={renderSavedRestaurantGrid}
-      />
+      {userRestaurants.length === 0 ? (
+        <Text>You have no restaurants saved</Text>
+      ) : (
+        <View style={styles.container}>
+          <Text>
+            This is the saved restaurant list screen - the users saved
+            restaurants will be rendered here
+          </Text>
+          <View style={styles.buttonContainer}>
+            {/* <Button title="Sort by price" onPress={() => sortByPrice()} />
+            <Button title="Sort by rating" onPress={() => sortByRating()} /> */}
+          </View>
+          <FlatList
+            keyExtractor={(item, index) => 'item' + index}
+            // data={restaurantList}
+            data={userRestaurants}
+            renderItem={renderSavedRestaurantGrid}
+          />
+        </View>
+      )}
     </View>
   );
 }

@@ -24,7 +24,7 @@ function LoginScreen(props) {
       .then((item) => {
         userInfo = item;
         userInfo.token = true;
-        console.log(userInfo);
+        // console.log(userInfo);
         if (userInfo._id) {
           dispatch({ type: 'LOGIN', payload: userInfo });
         }
@@ -43,7 +43,7 @@ function LoginScreen(props) {
       .then((res) => res.json())
       .then((item) => {
         userInfo = item;
-        console.log(userInfo);
+        // console.log(userInfo);
         dispatch({ type: 'REGISTER', payload: item });
       });
   };
@@ -76,11 +76,6 @@ function LoginScreen(props) {
       <Button
         title="Create Account"
         onPress={() => register(email, password)}
-      />
-
-      <Button
-        title="Go to home page"
-        onPress={() => props.navigation.navigate('Home')}
       />
     </View>
   );

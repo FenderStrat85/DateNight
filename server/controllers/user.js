@@ -56,7 +56,7 @@ const login = async (req, res) => {
 const saveRestaurant = async (req, res) => {
   try {
     const { user_id, restaurantData } = req.body;
-    console.log('save restaurant - user_id', user_id);
+    console.log('restaurantData', restaurantData);
     const user = await User.findOne({ _id: user_id });
     console.log(user);
     const isSaved = user.restaurants.find((id) => id === restaurantData.photo);
@@ -65,12 +65,14 @@ const saveRestaurant = async (req, res) => {
       return res.status(402).send(restaurantData);
     }
     user.restaurants.push(restaurantData.photo);
-    user.save();
+    // user.save();
     const restaurant = await Restaurant.findOne({
       photo: restaurantData.photo,
     });
     if (!restaurant) {
-      const restaurant = Restaurant.create({
+      console.log('inside if statement');
+      console.log('restaurantData', restaurantData);
+      const restaurant = await Restaurant.create({
         name: restaurantData.name,
         photo: restaurantData.photo,
         price: restaurantData.price,
@@ -81,8 +83,10 @@ const saveRestaurant = async (req, res) => {
         longitude: restaurantData.longitude,
         latitude: restaurantData.latitude,
       });
+      console.log('created restaurant inside if statement', restaurant);
     }
-
+    console.log('new saved restaurant', restaurant);
+    await user.save();
     // const restaurants = user.restaurants
     // const updatedRestaurants = [...restaurants, restaurantData.photo]
     // const res = await MyModel.update({ user_id }, { restaurants. });
@@ -113,7 +117,7 @@ const deleteRestaurant = async (req, res) => {
     console.log('updatedRestaurants', updatedRestaurants);
     user.restaurants = updatedRestaurants;
     user.save();
-    res.status(200).send(user.restaurants);
+    res.status(200).send({ resId: id });
   } catch (error) {
     console.log(error);
   }

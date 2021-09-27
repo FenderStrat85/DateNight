@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function RestaurantItemScreen(props) {
   //current method of toggling button
-  const [isSaved, setIsSaved] = useState(false);
+  // const [isSaved, setIsSaved] = useState(false);
+  let isSaved = false;
 
   const dispatch = useDispatch();
 
@@ -24,6 +25,12 @@ function RestaurantItemScreen(props) {
   const user_id = useSelector((state) => state.user.user_id);
   const savedRestaurants = useSelector((state) => state.user.userRestaurants);
   const restaurantData = props.route.params.paramKey;
+
+  savedRestaurants.forEach((item) => {
+    if (item.photo === imageToken) {
+      isSaved = true;
+    }
+  });
 
   const saveRestaurant = (user_id, restaurantData) => {
     // savedRestaurants.forEach((item) => {
@@ -38,26 +45,28 @@ function RestaurantItemScreen(props) {
     //       setIsSaved(true);
     //     }
 
-    return fetch(`${BACKEND_SERVER}/save`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: user_id,
-        restaurantData: restaurantData,
-      }),
-    })
-      .then((res) => res.json())
-      .then((item) => {
-        let restaurantInfo = item;
-        dispatch({ type: 'SAVE_RESTAURANT', payload: restaurantInfo });
+    if (isSaved) {
+      alert('This restaurant is already in your favourites!');
+    } else {
+      return fetch(`${BACKEND_SERVER}/save`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          restaurantData: restaurantData,
+        }),
       })
-      .catch((error) => console.log(error));
-    // }
-
-    //need to send this restaurant data to database
+        .then((res) => res.json())
+        .then((item) => {
+          let restaurantInfo = item;
+          console.log(restaurantInfo);
+          dispatch({ type: 'SAVE_RESTAURANT', payload: restaurantInfo });
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   React.useLayoutEffect(() => {

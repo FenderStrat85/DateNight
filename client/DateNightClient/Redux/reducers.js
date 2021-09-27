@@ -7,7 +7,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN':
-      console.log('I am in the reducer');
+      // console.log('I am in the reducer');
       return {
         ...state,
         isAuthenticated: true,
@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
         user_id: action.payload._id,
       };
     case 'REGISTER':
-      console.log('I am in the reducer');
+      // console.log('I am in the reducer');
       return {
         ...state,
         isAuthenticated: true,
@@ -23,22 +23,26 @@ const reducer = (state = initialState, action) => {
         user_id: action.payload._id,
       };
     case 'SAVE_RESTAURANT':
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         userRestaurants: [...state.userRestaurants, action.payload],
       };
     case 'DELETE_RESTAURANT':
-      console.log('I am in the delete reducer');
+      // console.log('I am in the delete reducer');
       let copy = [...state.userRestaurants];
-      console.log('line 32 copied array reducer', copy);
+      console.log('Delete reducer line 32 copied array reducer', copy);
+      console.log(action.payload.resId);
       const filteredCopy = copy.filter((restaurant) => {
-        restaurant.photo !== action.payload;
+        return restaurant.photo !== action.payload.resId;
       });
-      console.log('line 36 copied array after being filtered', filteredCopy);
+      console.log(
+        ' Delete Reducer line 36 copied array after being filtered',
+        copy,
+      );
       return {
         ...state,
-        userRestaurants: [filteredCopy],
+        userRestaurants: filteredCopy,
       };
     default:
       return state;
