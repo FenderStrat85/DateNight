@@ -89,23 +89,29 @@ function HomeScreen(props) {
     setSelectedCuisine();
   };
 
+  const resetCuisineHandler = () => {
+    setCuisineToPass([]);
+  };
   //text input field for cuisine does not work. I have no clue why
   return (
     <View style={styles.container}>
-      <View style={styles.chooseCuisineType}>
-        <Text>Input Cuisine</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={setSelectedCuisine}
-          value={selectedCuisine}
-          placeholder="useless placeholder"
-        />
-        <Button title="Submit Cuisine" onPress={cuisineChoiceHandler} />
-      </View>
       {cuisineToPass.length === 7 ? (
-        <Text>Woo hoo we have 7 cuisinese!</Text>
+        <View>
+          <Text>Woo hoo we have 7 cuisinese!</Text>
+          <Button title="Alter my choices" onPress={resetCuisineHandler} />
+        </View>
       ) : (
-        <Text>{cuisineToPass.length}</Text>
+        <View style={styles.chooseCuisineType}>
+          <Text>Input Cuisine</Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={setSelectedCuisine}
+            value={selectedCuisine}
+            placeholder="useless placeholder"
+          />
+          <Button title="Submit Cuisine" onPress={cuisineChoiceHandler} />
+          <Text>{cuisineToPass.length}</Text>
+        </View>
       )}
       <View style={styles.mapPreview}></View>
       <Button
@@ -143,7 +149,7 @@ function HomeScreen(props) {
           onChangeText={setDistance}
         />
       </View>
-      {selectedLocation && distance ? (
+      {selectedLocation && distance && cuisineToPass.length === 7 ? (
         <Button
           title="Lets use the spinner to find some dinner"
           onPress={() =>

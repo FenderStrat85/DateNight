@@ -18,13 +18,6 @@ function RestaurantListScreen(props) {
 
   const [restaurantList, setRestaurantList] = useState();
 
-  const paramsCheck = () => {
-    console.log('longitude', longitude);
-    console.log('latitude', latitude);
-    console.log('distance', distance);
-    console.log('data', typeof DATA.results);
-  };
-
   // fetching data with api call
 
   const getRestaurantsHandler = () => {
@@ -81,7 +74,11 @@ function RestaurantListScreen(props) {
             <View style={styles.titleText}>
               <Text>{itemData.item.name}</Text>
             </View>
-            <Text>Price: {itemData.item.price_level}</Text>
+            {!itemData.item.price_level ? (
+              <Text>Prince information not available</Text>
+            ) : (
+              <Text>Price: {itemData.item.price_level}</Text>
+            )}
             <Text>Rating: {itemData.item.rating}/5</Text>
           </View>
         </TouchableOpacity>
