@@ -92,33 +92,34 @@ function RestaurantListScreen(props) {
   return (
     <View style={styles.container}>
       {!restaurantList ? (
-        <View>
+        <View style={styles.getRestaurantContainer}>
           <Button
             title={`Click on me to find some awesome ${selectedCuisine} restaurants!`}
             onPress={getRestaurantsHandler}
           />
-          <Text>This is the new restaurant list screen</Text>
-          <Text>{selectedCuisine}</Text>
-          <Button
-            title="Lets click on a restaurant"
-            onPress={() => props.navigation.navigate('RestaurantItem')}
-          ></Button>
-          <Button title="Params check" onPress={paramsCheck} />
         </View>
       ) : (
         <View>
-          <View style={styles.buttonContainer}>
-            <Button title="Sort by price" onPress={() => sortByPrice()} />
-            <Button title="Sort by rating" onPress={() => sortByRating()} />
-          </View>
-          <View styles={styles.flatListContainer}>
-            <FlatList
-              keyExtractor={(item, index) => item.place_id}
-              data={restaurantList}
-              renderItem={renderRestaurantGrid}
-              // numColumns={2}
-            />
-          </View>
+          {restaurantList.length <= 0 ? (
+            <View style={styles.noRestaurantContainer}>
+              <Text>Uh oh! No restaurants!</Text>
+            </View>
+          ) : (
+            <View style={styles.container}>
+              <View style={styles.buttonContainer}>
+                <Button title="Sort by price" onPress={() => sortByPrice()} />
+                <Button title="Sort by rating" onPress={() => sortByRating()} />
+              </View>
+              <View styles={styles.flatListContainer}>
+                <FlatList
+                  keyExtractor={(item, index) => item.place_id}
+                  data={restaurantList}
+                  renderItem={renderRestaurantGrid}
+                  // numColumns={2}
+                />
+              </View>
+            </View>
+          )}
         </View>
       )}
     </View>
@@ -131,6 +132,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // justifyContent: 'center',
     backgroundColor: 'orange',
+  },
+  getRestaurantContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noRestaurantContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
