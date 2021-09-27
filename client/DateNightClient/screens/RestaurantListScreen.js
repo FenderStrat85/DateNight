@@ -26,27 +26,23 @@ function RestaurantListScreen(props) {
   };
 
   // fetching data with api call
-  // const getRestaurantsHandler = async () => {
-  //   try {
-  //     let response = await fetch(
-  //       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&types=restaurant&radius=${distance}&keyword=${selectedCuisine}, &key=${API_KEY}`,
-  //     );
-  //     let json = await response.json();
-  //     setRestaurantList(json);
-  //     console.log('restaurantList', restaurantList);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
+  const getRestaurantsHandler = () => {
+    return fetch(
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&types=restaurant&radius=${distance}&keyword=${selectedCuisine}, &key=${API_KEY}`,
+    )
+      .then((res) => res.json())
+      .then((item) => setRestaurantList(item.results));
+  };
 
   //using dummy data
-  const getRestaurantsHandler = async () => {
-    let resArr = [];
-    DATA.results.forEach((item) => {
-      resArr.push(item);
-    });
-    setRestaurantList(resArr);
-  };
+  // const getRestaurantsHandler = async () => {
+  //   let resArr = [];
+  //   DATA.results.forEach((item) => {
+  //     resArr.push(item);
+  //   });
+  //   setRestaurantList(resArr);
+  // };
 
   const sortByRating = () => {
     let copy = [...restaurantList];
