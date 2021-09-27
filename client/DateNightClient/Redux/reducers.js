@@ -22,6 +22,11 @@ const reducer = (state = initialState, action) => {
         userRestaurants: action.payload.restaurants,
         user_id: action.payload._id,
       };
+    case 'LOGOUT':
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
     case 'SAVE_RESTAURANT':
       // console.log(action.payload);
       return {
@@ -43,6 +48,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userRestaurants: filteredCopy,
+      };
+    case 'SORT_BY_PRICE':
+      let priceCopy = [...state.userRestaurants];
+      priceCopy.sort((a, b) => a.price - b.price);
+      return {
+        ...state,
+        userRestaurants: priceCopy,
+      };
+    case 'SORT_BY_RATING':
+      let ratingCopy = [...state.userRestaurants];
+      ratingCopy.sort((a, b) => b.rating - a.rating);
+      return {
+        ...state,
+        userRestaurants: ratingCopy,
       };
     default:
       return state;

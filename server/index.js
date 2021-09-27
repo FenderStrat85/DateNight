@@ -9,7 +9,7 @@ const router = require('./router');
 const app = express();
 
 const corsConfig = {
-  origin: 'http://localhost:3000',
+  origin: 'http://192.168.1.66:3000',
   credentials: true,
 };
 

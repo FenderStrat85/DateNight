@@ -44,8 +44,8 @@ const login = async (req, res) => {
     } else {
       req.session.uid = user._id;
       user.restaurants = restaurantArray;
-      console.log('user info at login', user);
-      console.log('users restaurants', user.restaurants);
+      // console.log('user info at login', user);
+      // console.log('users restaurants', user.restaurants);
       res.status(200).send(user);
     }
   } catch (error) {
@@ -87,11 +87,6 @@ const saveRestaurant = async (req, res) => {
     }
     console.log('new saved restaurant', restaurant);
     await user.save();
-    // const restaurants = user.restaurants
-    // const updatedRestaurants = [...restaurants, restaurantData.photo]
-    // const res = await MyModel.update({ user_id }, { restaurants. });
-    // user.restaurants.push(restaurantData);
-    // await user.save();
     console.log('user.restaurants', user.restaurants);
     console.log('full user profile line 92 - save function', user);
     res.status(200).send(restaurantData);
@@ -124,14 +119,17 @@ const deleteRestaurant = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  console.log(req.body);
+  console.log('session destroyed');
   req.session.destroy((error) => {
     if (error) {
       res
         .status(500)
         .send({ error, message: 'Could not log out, please try again' });
     } else {
+      console.log('logging out');
       res.clearCookie('sid');
-      res.sendStatus(200);
+      res.status(200).send({ id: req.body.user_id });
     }
   });
 };

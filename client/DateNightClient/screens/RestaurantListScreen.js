@@ -112,7 +112,6 @@ function RestaurantListScreen(props) {
                   keyExtractor={(item, index) => item.place_id}
                   data={restaurantList}
                   renderItem={renderRestaurantGrid}
-                  // numColumns={2}
                 />
               </View>
             </View>

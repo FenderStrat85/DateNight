@@ -11,8 +11,12 @@ import {
   TouchableWithoutFeedback,
   FlatList,
 } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../components/CustomHeaderButton';
 import InputSpinner from 'react-native-input-spinner';
 import * as Location from 'expo-location';
+import { useSelector, useDispatch } from 'react-redux';
+import { BACKEND_SERVER } from '@env';
 // import InputComponent from '../components/InputComponent';
 // import MapPreview from '../components/MapPreview';
 
@@ -29,6 +33,10 @@ function HomeScreen(props) {
   const [selectedLocation, setSelectedLocation] = useState();
   //state management for distance from destination
   const [distance, setDistance] = useState();
+
+  const user_id = useSelector((state) => state.user.user_id);
+
+  const dispatch = useDispatch();
 
   const verifyPermissions = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -101,6 +109,40 @@ function HomeScreen(props) {
   const renderCuisineChoice = (itemData) => {
     return <Text> {itemData.item} </Text>;
   };
+
+  const logout = (user_id) => {
+    return fetch(`${BACKEND_SERVER}/logout`, {
+      method: 'POST',
+      credentials: 'include',
+      // method: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: user_id }),
+    })
+      .then((res) => res.json())
+      .then((item) => {
+        if (item.id) {
+          dispatch({ type: 'LOGOUT' });
+        }
+      });
+  };
+
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="Logout"
+            // iconName={'logout'}
+            onPress={() => logout(user_id)}
+          />
+        </HeaderButtons>
+      ),
+    });
+  });
+
   return (
     <View style={styles.container}>
       {cuisineToPass.length === 7 ? (

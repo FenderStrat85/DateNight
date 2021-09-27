@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
-import { login } from '../api/api';
+import { BACKEND_SERVER } from '@env';
 import { useDispatch, useSelector } from 'react-redux';
 
 function LoginScreen(props) {
@@ -12,7 +12,7 @@ function LoginScreen(props) {
   let userInfo;
 
   const login = (email, password) => {
-    return fetch('http://192.168.1.66:3005/login', {
+    return fetch(`${BACKEND_SERVER}/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -24,7 +24,6 @@ function LoginScreen(props) {
       .then((item) => {
         userInfo = item;
         userInfo.token = true;
-        // console.log(userInfo);
         if (userInfo._id) {
           dispatch({ type: 'LOGIN', payload: userInfo });
         }
@@ -32,7 +31,7 @@ function LoginScreen(props) {
   };
 
   const register = (email, password) => {
-    return fetch('http://192.168.1.66:3005/register', {
+    return fetch(`${BACKEND_SERVER}/register`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -43,7 +42,6 @@ function LoginScreen(props) {
       .then((res) => res.json())
       .then((item) => {
         userInfo = item;
-        // console.log(userInfo);
         dispatch({ type: 'REGISTER', payload: item });
       });
   };

@@ -10,8 +10,7 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import { useDispatch, useSelector } from 'react-redux';
 
 function RestaurantItemScreen(props) {
-  //current method of toggling button
-  // const [isSaved, setIsSaved] = useState(false);
+  //set isSaved to false initially which is then updated using the forEach below
   let isSaved = false;
 
   const dispatch = useDispatch();
@@ -33,17 +32,8 @@ function RestaurantItemScreen(props) {
   });
 
   const saveRestaurant = (user_id, restaurantData) => {
-    // savedRestaurants.forEach((item) => {
-    //   if (
-    //     item.name === restaurantData.name &&
-    //     item.longitude === restaurantData.longitude &&
-    //     item.latitude === restaurantData.latitude
-    //   ) {
-    //     alert('You have already saved this restaurant!');
-    //   } else {
-    //     if (!isSaved) {
-    //       setIsSaved(true);
-    //     }
+    //uses the user's _id to access their profile
+    //and uses the photo property to create link between user and restaurant schema
 
     if (isSaved) {
       alert('This restaurant is already in your favourites!');

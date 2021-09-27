@@ -7,10 +7,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 function SavedRestaurantListScreen(props) {
-  //sets initial state
+  //sets initial state, but this is no longer used.
+  //userRestaurants is used to render to render the data now
   let userRestaurants = useSelector((state) => {
     console.log(
       'SvedRestaurantListScreen userRestaurant list from reducer',
@@ -24,38 +25,17 @@ function SavedRestaurantListScreen(props) {
     'SavedRestaurantListScreen userRestaurants.length',
     userRestaurants.length,
   );
-  // useEffect(() => {
-  //   console.log('restaurantList before being updated', restaurantList);
-  //   console.log(
-  //     'useEffect(): identifying that that the userRestaurants have changed',
-  //   );
-  //   setRestaurantList(userRestaurants);
-  //   console.log(
-  //     'restaurantList after being set to updated user restaurants',
-  //     restaurantList,
-  //   );
-  // }, [userRestaurants]);
 
-  // console.log('restaurantList from state', restaurantList);
-
-  // sort by rating using state
-  const sortByRating = () => {
-    const copy = [...restaurantList];
-    copy.sort((a, b) => b.rating - a.rating);
-    setRestaurantList(copy);
-  };
+  const dispatch = useDispatch();
 
   //sort by rating using redux
-  // const sortByRating = () => {
-  //   const copy = [...userRestaurants];
-  //   copy.sort((a, b) => b.rating - a.rating);
-  // };
+  const sortByRating = () => {
+    dispatch({ type: 'SORT_BY_RATING' });
+  };
 
-  //sort by rating using price
+  //sort by price using redux
   const sortByPrice = () => {
-    const copy = [...restaurantList];
-    copy.sort((a, b) => a.price - b.price);
-    setRestaurantList(copy);
+    dispatch({ type: 'SORT_BY_RATING' });
   };
 
   const renderSavedRestaurantGrid = (itemData) => {
@@ -102,8 +82,8 @@ function SavedRestaurantListScreen(props) {
             restaurants will be rendered here
           </Text>
           <View style={styles.buttonContainer}>
-            {/* <Button title="Sort by price" onPress={() => sortByPrice()} />
-            <Button title="Sort by rating" onPress={() => sortByRating()} /> */}
+            <Button title="Sort by price" onPress={() => sortByPrice()} />
+            <Button title="Sort by rating" onPress={() => sortByRating()} />
           </View>
           <FlatList
             keyExtractor={(item, index) => 'item' + index}
