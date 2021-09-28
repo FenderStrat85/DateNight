@@ -8,6 +8,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Ionicons } from '@expo/vector-icons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { useDispatch, useSelector } from 'react-redux';
+import Colours from '../constants/Colours';
 
 function RestaurantItemScreen(props) {
   //set isSaved to false initially which is then updated using the forEach below
@@ -75,8 +76,19 @@ function RestaurantItemScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text>{props.route.params.paramKey.name}</Text>
+      <Text style={styles.textBold}>{props.route.params.paramKey.name}</Text>
       <ImagePreview imageUrl={imageToken} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.text}>Average Rating: {restaurantData.rating}</Text>
+        <Text style={styles.text}>
+          Total Reviews: {restaurantData.totalRatings}
+        </Text>
+        <Text style={styles.text}>
+          Open now:{' '}
+          {restaurantData.openNow ? <Text>Yes</Text> : <Text>No</Text>}
+        </Text>
+        <Text style={styles.text}>Price: {price}</Text>
+      </View>
       <MapPreview lat={restaurantLat} long={restaurantLong} />
     </View>
   );
@@ -87,7 +99,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ccc',
+    backgroundColor: Colours.backingColour,
+  },
+  infoContainer: {},
+  text: {
+    fontSize: 20,
+    fontFamily: 'open-sans',
+    textAlign: 'center',
+  },
+  textBold: {
+    fontSize: 20,
+    fontFamily: 'open-sans-bold',
+    textAlign: 'center',
   },
 });
 

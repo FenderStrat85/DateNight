@@ -94,7 +94,7 @@ function SpinnerScreen(props) {
           />
           {winnerIndex && winnerValue ? (
             <Text style={styles.textBold}>
-              And the winner is...... {winnerValue}!
+              And the winning cuisine is...... {winnerValue}!
             </Text>
           ) : (
             <Text style={styles.text}>No winners yet....</Text>

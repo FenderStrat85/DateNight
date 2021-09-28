@@ -341,6 +341,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+    width: '80%',
+  },
   text: {
     fontFamily: 'open-sans',
     fontSize: 20,

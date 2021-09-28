@@ -11,6 +11,7 @@ import { API_KEY, MESSAGE } from '@env';
 import DATA from '../dummyData';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
@@ -74,14 +75,16 @@ function RestaurantListScreen(props) {
         >
           <View style={styles.containerItem}>
             <View style={styles.titleText}>
-              <Text>{itemData.item.name}</Text>
+              <Text style={styles.textBold}>{itemData.item.name}</Text>
             </View>
             {!itemData.item.price_level ? (
-              <Text>Prince information not available</Text>
+              <Text style={styles.text}>Prince information not available</Text>
             ) : (
-              <Text>Price: {itemData.item.price_level}</Text>
+              <Text style={styles.text}>
+                Price: {`${itemData.item.price_level}`}
+              </Text>
             )}
-            <Text>Rating: {itemData.item.rating}/5</Text>
+            <Text style={styles.text}>Rating: {itemData.item.rating}/5</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -92,17 +95,12 @@ function RestaurantListScreen(props) {
     <View style={styles.container}>
       {!restaurantList ? (
         <View style={styles.getRestaurantContainer}>
-          {/* <Button
-            title={`Click on me to find some awesome ${selectedCuisine} restaurants!`}
-            onPress={getRestaurantsHandler}
-          /> */}
           <View style={styles.textView}>
             <Text
               style={styles.textBold}
             >{`Click the button below to find some awesome ${selectedCuisine} restaurants!`}</Text>
           </View>
           <CustomButton
-            style={styles.button}
             onPress={getRestaurantsHandler}
             label="Get my restaurants!"
           />
@@ -111,16 +109,25 @@ function RestaurantListScreen(props) {
         <View>
           {restaurantList.length <= 0 ? (
             <View style={styles.noRestaurantContainer}>
-              <Text>Uh oh! No restaurants!</Text>
+              <Text style={styles.textBold}>Uh oh! No restaurants!</Text>
             </View>
           ) : (
             <View style={styles.container}>
               <View style={styles.buttonContainer}>
-                <Button title="Sort by price" onPress={() => sortByPrice()} />
-                <Button title="Sort by rating" onPress={() => sortByRating()} />
+                <CustomButton
+                  style={styles.button}
+                  onPress={() => sortByPrice()}
+                  label="Sort by price"
+                />
+                <CustomButton
+                  style={styles.button}
+                  onPress={() => sortByRating()}
+                  label="Sort by rating"
+                />
               </View>
               <View styles={styles.flatListContainer}>
                 <FlatList
+                  contentContainerStyle={styles.flatList}
                   keyExtractor={(item, index) => item.place_id}
                   data={restaurantList}
                   renderItem={renderRestaurantGrid}
@@ -145,6 +152,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  // flatListContainer: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   width: '50%',
+  //   backgroundColor: 'orange',
+  // },
+  flatList: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   noRestaurantContainer: {
     flex: 1,
     alignItems: 'center',
@@ -155,16 +173,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  button: {
+    width: '45%',
+    margin: 5,
+  },
   gridItem: {
     margin: 15,
     height: 150,
-    width: '80%',
+    width: 320,
+    height: 200,
     // overflow: 'hidden',
   },
-  titleText: { borderColor: 'black', borderWidth: 1 },
+  titleText: { marginBottom: 20 },
   containerItem: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: Colours.textInputBackingColour,
     borderRadius: 10,
     padding: 15,
     justifyContent: 'flex-end',
@@ -176,11 +199,17 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     //for android
     elevation: 8,
+    borderWidth: 0.5,
+  },
+  text: {
+    fontSize: 'open-sans',
+    fontSize: 20,
+    textAlign: 'right',
   },
   textBold: {
     fontFamily: 'open-sans-bold',
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: 'right',
   },
   textView: {
     alignItems: 'center',

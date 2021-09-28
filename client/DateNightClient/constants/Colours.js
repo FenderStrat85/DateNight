@@ -4,4 +4,5 @@ export default {
   backingColour: '#FFF8E5',
   highlightColour: '#E05D5D',
   borderColour: '#112031',
+  textInputBackingColour: '#FFC0CB',
 };

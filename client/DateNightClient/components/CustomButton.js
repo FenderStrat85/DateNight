@@ -5,7 +5,7 @@ import Colours from '../constants/Colours';
 function CustomButton(props) {
   return (
     <TouchableOpacity
-      style={styles.button}
+      style={[styles.button, { ...props.style }]}
       color={Colours.primaryColour}
       onPress={props.onPress}
     >
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: Colours.borderColour,
     width: '60%',
     borderRadius: 30,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   labelText: {
     color: Colours.primaryColour,
     fontSize: 20,
-    fontFamily: 'open-sans',
+    fontFamily: 'open-sans-bold',
   },
 });
 

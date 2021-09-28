@@ -7,7 +7,10 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useSelector, useDispatch } from 'react-redux';
+import Colours from '../constants/Colours';
+import CustomButton from '../components/CustomButton';
 
 function SavedRestaurantListScreen(props) {
   //sets initial state, but this is no longer used.
@@ -61,10 +64,15 @@ function SavedRestaurantListScreen(props) {
         >
           <View style={styles.containerItem}>
             <View style={styles.titleText}>
-              <Text>{itemData.item.name}</Text>
+              <Text style={styles.textBold}>{itemData.item.name}</Text>
             </View>
-            <Text>Price: {itemData.item.price}</Text>
-            <Text>Rating: {itemData.item.rating}/5</Text>
+            {!itemData.item.price ? (
+              <Text style={styles.text}>No price information available</Text>
+            ) : (
+              <Text style={styles.text}>Price: {itemData.item.price}</Text>
+            )}
+
+            <Text style={styles.text}>Rating: {itemData.item.rating}/5</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -74,23 +82,32 @@ function SavedRestaurantListScreen(props) {
   return (
     <View style={styles.container}>
       {userRestaurants.length === 0 ? (
-        <Text>You have no restaurants saved</Text>
+        <Text style={styles.textBold}>You have no restaurants saved</Text>
       ) : (
         <View style={styles.container}>
-          <Text>
-            This is the saved restaurant list screen - the users saved
-            restaurants will be rendered here
-          </Text>
           <View style={styles.buttonContainer}>
-            <Button title="Sort by price" onPress={() => sortByPrice()} />
-            <Button title="Sort by rating" onPress={() => sortByRating()} />
+            {/* <Button title="Sort by price" onPress={() => sortByPrice()} /> */}
+            <CustomButton
+              style={styles.button}
+              onPress={() => sortByPrice()}
+              label="Sort by Price"
+            />
+            {/* <Button title="Sort by rating" onPress={() => sortByRating()} /> */}
+            <CustomButton
+              style={styles.button}
+              onPress={() => sortByRating()}
+              label="Sort by Price"
+            />
           </View>
-          <FlatList
-            keyExtractor={(item, index) => 'item' + index}
-            // data={restaurantList}
-            data={userRestaurants}
-            renderItem={renderSavedRestaurantGrid}
-          />
+          <View style={styles.flatListContainer}>
+            <FlatList
+              contentContainerStyle={styles.flatList}
+              keyExtractor={(item, index) => 'item' + index}
+              // data={restaurantList}
+              data={userRestaurants}
+              renderItem={renderSavedRestaurantGrid}
+            />
+          </View>
         </View>
       )}
     </View>
@@ -101,20 +118,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: Colours.backingColour,
+  },
+  flatList: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  button: {
+    width: '45%',
+    margin: 5,
+  },
   gridItem: {
     margin: 15,
     height: 150,
-    width: '80%',
+    width: 320,
+    height: 200,
     // overflow: 'hidden',
   },
-  titleText: { borderColor: 'black', borderWidth: 1 },
+  titleText: { marginBottom: 20 },
   containerItem: {
     flex: 1,
     backgroundColor: 'pink',
@@ -129,6 +155,21 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     //for android
     elevation: 8,
+  },
+  text: {
+    fontSize: 'open-sans',
+    fontSize: 20,
+    textAlign: 'right',
+  },
+  textBold: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 20,
+    textAlign: 'right',
+  },
+  textView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 30,
   },
 });
 
