@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { API_KEY, MESSAGE } from '@env';
 import DATA from '../dummyData';
+import Colours from '../constants/Colours';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
@@ -126,8 +128,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: Colours.backingColour,
   },
   getRestaurantContainer: {
     flex: 1,

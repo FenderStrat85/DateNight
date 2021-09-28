@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
 import WheelOfFortune from 'react-native-wheel-of-fortune';
-// import WheelOfFortune from '../components/Spinner';
+import Colours from '../constants/Colours';
+import CustomButton from '../components/CustomButton';
 
 function SpinnerScreen(props) {
   const [winnerValue, setWinnerValue] = useState('');
@@ -79,25 +80,27 @@ function SpinnerScreen(props) {
       /> */}
         </View>
         <View style={styles.controlView}>
-          <Button
+          {/* <Button
             title="Spin me"
             onPress={() => {
               this.child._tryAgain();
             }}
+          /> */}
+          <CustomButton
+            onPress={() => {
+              this.child._tryAgain();
+            }}
+            label="Spin Me!"
           />
           {winnerIndex && winnerValue ? (
-            <Text>
-              We have a winnerIndex:{winnerIndex} and we have a winnerValue
-              {winnerValue}
+            <Text style={styles.textBold}>
+              And the winner is...... {winnerValue}!
             </Text>
           ) : (
-            <Text>No winners yet....</Text>
+            <Text style={styles.text}>No winners yet....</Text>
           )}
-          {/* </View>
-      <View > */}
           {winnerIndex ? (
-            <Button
-              title="Go to restaurant list"
+            <CustomButton
               onPress={() =>
                 props.navigation.navigate('RestaurantList', {
                   paramKey: {
@@ -107,9 +110,10 @@ function SpinnerScreen(props) {
                   },
                 })
               }
+              label="Find Restaurants!"
             />
           ) : (
-            <Text>Click the button to help find a restaurant</Text>
+            <Text></Text>
           )}
         </View>
       </ScrollView>
@@ -120,7 +124,7 @@ function SpinnerScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ccc',
+    backgroundColor: Colours.backingColour,
     alignItems: 'center',
   },
   scrollView: {
@@ -129,16 +133,21 @@ const styles = StyleSheet.create({
   spinnerContainer: {
     width: '100%',
     height: 400,
+    marginVertical: 50,
   },
   controlView: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50,
-    borderWidth: 1,
+    marginTop: 20,
     padding: 5,
-    borderRadius: 10,
-    borderColor: 'black',
+  },
+  text: {
+    fontFamily: 'open-sans',
+    fontSize: 20,
+  },
+  textBold: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 20,
   },
 });
 
