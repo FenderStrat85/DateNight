@@ -46,6 +46,11 @@ function SavedRestaurantItemScreen(props) {
       .catch((error) => console.log(error));
   };
 
+  const setPriceLevel = (price) => {
+    let newArr = new Array(price).fill('£');
+    return newArr.join('');
+  };
+
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
@@ -70,7 +75,9 @@ function SavedRestaurantItemScreen(props) {
         <Text style={styles.text}>
           Total Reviews: {restaurantData.totalRatings}
         </Text>
-        <Text style={styles.text}>Price: </Text>
+        <Text style={styles.text}>
+          Price: {setPriceLevel(restaurantData.price)}
+        </Text>
       </View>
       <MapPreview lat={restaurantLat} long={restaurantLong} />
     </View>

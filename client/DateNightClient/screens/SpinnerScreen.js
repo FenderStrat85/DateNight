@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
 import WheelOfFortune from 'react-native-wheel-of-fortune';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
+import CustomHeaderButton from '../components/CustomHeaderButton';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 function SpinnerScreen(props) {
   const [winnerValue, setWinnerValue] = useState('');
@@ -64,6 +66,22 @@ function SpinnerScreen(props) {
     },
     onRef: (ref) => (this.child = ref),
   };
+
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="back"
+            iconName={'arrow-back'}
+            color={Colours.primaryColour}
+            onPress={() => props.navigation.navigate('Home')}
+          />
+        </HeaderButtons>
+      ),
+    });
+  });
+
   return (
     //setting button to be try again seems to allow the spinner to re-render with
     //no issues

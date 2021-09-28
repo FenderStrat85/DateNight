@@ -18,6 +18,7 @@ function RestaurantListScreen(props) {
   const longitude = props.route.params.paramKey.chosenLocation.long;
   const latitude = props.route.params.paramKey.chosenLocation.lat;
   const distance = props.route.params.paramKey.chosenDistance;
+  const price = props.route.params.paramKey.price_level;
 
   const [restaurantList, setRestaurantList] = useState();
 
@@ -52,6 +53,11 @@ function RestaurantListScreen(props) {
     setRestaurantList(copy);
   };
 
+  const setPriceLevel = (price) => {
+    let newArr = new Array(price).fill('£');
+    return newArr.join('');
+  };
+
   const renderRestaurantGrid = (itemData) => {
     return (
       <View style={styles.gridItem}>
@@ -78,10 +84,10 @@ function RestaurantListScreen(props) {
               <Text style={styles.textBold}>{itemData.item.name}</Text>
             </View>
             {!itemData.item.price_level ? (
-              <Text style={styles.text}>Prince information not available</Text>
+              <Text style={styles.text}>Price information not available</Text>
             ) : (
               <Text style={styles.text}>
-                Price: {`${itemData.item.price_level}`}
+                Price: {setPriceLevel(itemData.item.price_level)}
               </Text>
             )}
             <Text style={styles.text}>Rating: {itemData.item.rating}/5</Text>

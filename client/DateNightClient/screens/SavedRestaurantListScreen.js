@@ -41,6 +41,11 @@ function SavedRestaurantListScreen(props) {
     dispatch({ type: 'SORT_BY_RATING' });
   };
 
+  const setPriceLevel = (price) => {
+    let newArr = new Array(price).fill('£');
+    return newArr.join('');
+  };
+
   const renderSavedRestaurantGrid = (itemData) => {
     return (
       <View style={styles.gridItem}>
@@ -69,7 +74,9 @@ function SavedRestaurantListScreen(props) {
             {!itemData.item.price ? (
               <Text style={styles.text}>No price information available</Text>
             ) : (
-              <Text style={styles.text}>Price: {itemData.item.price}</Text>
+              <Text style={styles.text}>
+                Price: {setPriceLevel(itemData.item.price)}
+              </Text>
             )}
 
             <Text style={styles.text}>Rating: {itemData.item.rating}/5</Text>

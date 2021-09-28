@@ -32,7 +32,17 @@ function RootNavigator() {
 //is the one the must be passed into props.navigation.navigate()
 function ScreenNavigator() {
   return (
-    <MainStack.Navigator>
+    <MainStack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontSize: 24,
+          fontFamily: 'open-sans-bold',
+          color: Colours.primaryColour,
+        },
+        // headerTintColor: Colours.primaryColour,
+        // headerBackTitle: 'Back',
+      }}
+    >
       <MainStack.Screen name="Home" component={HomeScreen} />
       <MainStack.Screen name="Spinner" component={SpinnerScreen} />
       <MainStack.Screen
@@ -55,7 +65,17 @@ function ScreenNavigator() {
 
 function SavedStackNavigator() {
   return (
-    <SaveStack.Navigator>
+    <SaveStack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontSize: 24,
+          fontFamily: 'open-sans-bold',
+          color: Colours.primaryColour,
+        },
+        headerTintColor: Colours.primaryColour,
+        headerBackTitle: 'Back',
+      }}
+    >
       <SaveStack.Screen
         name="Your Saved Restaurants"
         component={SavedRestaurantListScreen}
@@ -84,9 +104,9 @@ function MainNavigator() {
           screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
               let iconName;
-              if (route.name === 'ChooseRestaurants') {
+              if (route.name === 'Choose Restaurants') {
                 iconName = 'ios-restaurant';
-              } else if (route.name === 'SavedRestaurants') {
+              } else if (route.name === 'Saved Restaurants') {
                 iconName = 'ios-star';
               }
               return <Ionicons name={iconName} size={size} color={color} />;
@@ -98,21 +118,21 @@ function MainNavigator() {
               fontSize: 12,
               fontFamily: 'open-sans',
             },
-            tabBarStyle: {
-              marginBottom: 2,
-              paddingTop: 2,
-            },
+            // tabBarStyle: {
+            //   marginBottom: 2,
+            //   paddingTop: 2,
+            // },
           })}
         >
           <Tab.Screen
-            name="ChooseRestaurants"
+            name="Choose Restaurants"
             component={ScreenNavigator}
             options={{
               tabBarLabel: 'Choose Restaurants',
             }}
           />
           <Tab.Screen
-            name="SavedRestaurants"
+            name="Saved Restaurants"
             component={SavedStackNavigator}
             options={{
               tabBarLabel: 'Saved Restaurants',

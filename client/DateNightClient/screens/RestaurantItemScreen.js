@@ -60,6 +60,11 @@ function RestaurantItemScreen(props) {
     }
   };
 
+  const setPriceLevel = (price) => {
+    let newArr = new Array(price).fill('£');
+    return newArr.join('');
+  };
+
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
@@ -87,7 +92,9 @@ function RestaurantItemScreen(props) {
           Open now:{' '}
           {restaurantData.openNow ? <Text>Yes</Text> : <Text>No</Text>}
         </Text>
-        <Text style={styles.text}>Price: </Text>
+        <Text style={styles.text}>
+          Price: {setPriceLevel(restaurantData.price)}
+        </Text>
       </View>
       <MapPreview lat={restaurantLat} long={restaurantLong} />
     </View>

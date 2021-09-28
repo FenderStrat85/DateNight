@@ -22,6 +22,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BACKEND_SERVER } from '@env';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
+import { MaterialIcons } from '@expo/vector-icons';
+import LogoutButton from '../components/LogoutButton';
 
 function HomeScreen(props) {
   //need to add functionality to get selected radius from user
@@ -135,10 +137,11 @@ function HomeScreen(props) {
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <HeaderButtons HeaderButtonComponent={LogoutButton}>
           <Item
             title="Logout"
-            // iconName={'logout'}
+            iconName={'logout'}
+            color={Colours.highLightColour}
             onPress={() => logout(user_id)}
           />
         </HeaderButtons>
@@ -148,12 +151,12 @@ function HomeScreen(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.scrollView}>
         {cuisineToPass.length === 7 ? (
           <View style={styles.alterView}>
             <Text style={styles.text}>Woo hoo we have 7 cuisines!</Text>
             <CustomButton
-              onPres={resetCuisineHandler}
+              onPress={resetCuisineHandler}
               label="Alter my choices"
             />
           </View>
@@ -257,7 +260,7 @@ function HomeScreen(props) {
             />
           </View>
         ) : (
-          <Text></Text>
+          <View style={styles.buttonHider}></View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -353,6 +356,9 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-bold',
     fontSize: 20,
     color: Colours.borderColour,
+  },
+  buttonHider: {
+    height: 90,
   },
 });
 
