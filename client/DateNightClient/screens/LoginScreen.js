@@ -50,6 +50,9 @@ function LoginScreen(props) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.titleView}>
+        <Text style={styles.titleText}>Welcome to DateNight!</Text>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.textInput}
@@ -71,20 +74,25 @@ function LoginScreen(props) {
           secureTextEntry
         />
       </View>
-      <View style={styles.button}>
+      {/* <View style={styles.button}>
         <Button
           color={Colours.primaryColour}
           title="Sign In"
           onPress={() => login(email, password)}
         />
-      </View>
-      <View style={styles.button}>
+      </View> */}
+      <CustomButton onPress={() => login(email, password)} label="Sign In" />
+      {/* <View style={styles.button}>
         <Button
           color={Colours.primaryColour}
           title="Create Account"
           onPress={() => register(email, password)}
         />
-      </View>
+      </View> */}
+      <CustomButton
+        onPress={() => register(email, password)}
+        label="Create Account"
+      />
     </View>
   );
 }
@@ -95,6 +103,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colours.backingColour,
+  },
+  titleView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  titleText: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 40,
+    textAlign: 'center',
+    color: Colours.highlightColour,
   },
   inputView: {
     backgroundColor: '#FFC0CB',
@@ -123,7 +142,7 @@ const styles = StyleSheet.create({
     borderColor: Colours.borderColour,
     width: '40%',
     borderRadius: 30,
-    marginVertical: 10,
+    marginVertical: 20,
     padding: 10,
     height: 60,
   },

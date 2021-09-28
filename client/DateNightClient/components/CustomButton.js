@@ -1,19 +1,35 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Colours from '../constants/Colours';
 
 function CustomButton(props) {
-  return <View style={styles.button}></View>;
+  return (
+    <TouchableOpacity
+      style={styles.button}
+      color={Colours.primaryColour}
+      onPress={props.onPress}
+    >
+      <Text style={styles.labelText}>{props.label}</Text>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
   button: {
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: Colours.borderColour,
-    width: '40%',
+    width: '60%',
     borderRadius: 30,
-    marginVertical: 10,
+    marginVertical: 20,
+    padding: 10,
     height: 50,
+  },
+  labelText: {
+    color: Colours.primaryColour,
+    fontSize: 20,
+    fontFamily: 'open-sans',
   },
 });
 

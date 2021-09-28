@@ -20,8 +20,8 @@ import InputSpinner from 'react-native-input-spinner';
 import * as Location from 'expo-location';
 import { useSelector, useDispatch } from 'react-redux';
 import { BACKEND_SERVER } from '@env';
-// import InputComponent from '../components/InputComponent';
-// import MapPreview from '../components/MapPreview';
+import Colours from '../constants/Colours';
+import CustomButton from '../components/CustomButton';
 
 function HomeScreen(props) {
   //need to add functionality to get selected radius from user
@@ -150,13 +150,16 @@ function HomeScreen(props) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {cuisineToPass.length === 7 ? (
-          <View>
-            <Text>Woo hoo we have 7 cuisines!</Text>
-            <Button title="Alter my choices" onPress={resetCuisineHandler} />
+          <View style={styles.alterView}>
+            <Text style={styles.text}>Woo hoo we have 7 cuisines!</Text>
+            <CustomButton
+              onPres={resetCuisineHandler}
+              label="Alter my choices"
+            />
           </View>
         ) : (
           <View style={styles.chooseCuisineType}>
-            <Text>Input Cuisine</Text>
+            <Text style={styles.textBold}>Step 1: Input Cuisine</Text>
             <View style={styles.inputView}>
               <TextInput
                 style={styles.textInput}
@@ -165,8 +168,13 @@ function HomeScreen(props) {
                 placeholder="Choose your cuisines!"
               />
             </View>
-            <Button title="Submit Cuisine" onPress={cuisineChoiceHandler} />
-            <Text>{cuisineToPass.length}</Text>
+            <Text style={styles.text}>
+              We need {7 - cuisineToPass.length} more cuisines
+            </Text>
+            <CustomButton
+              onPress={cuisineChoiceHandler}
+              label="Submit Cuisine"
+            />
           </View>
         )}
         {/* <View style={styles.cuisinePreview}>
@@ -178,13 +186,20 @@ function HomeScreen(props) {
           renderItem={renderCuisineChoice}
         />
       </View> */}
-        <Button
-          title="Get Current Location"
-          onPress={getCurrentLocationHandler}
-        />
+        <View style={styles.currentLocation}>
+          <Text style={styles.textBold}>Step 2: Get a Location</Text>
+          <CustomButton
+            onPress={getCurrentLocationHandler}
+            label="Get current location"
+          />
+        </View>
         <View style={styles.chooseLocation}>
-          <Text>Don't want to use you current location?</Text>
-          <Text>Please enter a town, postcode, station etc</Text>
+          <Text style={styles.text}>
+            Don't want to use you current location?
+          </Text>
+          <Text style={styles.text}>
+            Please enter a town, postcode, station etc
+          </Text>
           <View style={styles.inputView}>
             <TextInput
               style={styles.textInput}
@@ -194,49 +209,55 @@ function HomeScreen(props) {
               onChangeText={setUserTypedLocation}
             />
           </View>
-          <Button
-            title="Get my chosen location"
+          <CustomButton
             onPress={getSelectedLocationHandler}
+            label="Get my chosen location"
           />
         </View>
         <View>
           {isFetching ? <ActivityIndicator size="large" /> : <Text></Text>}
         </View>
         {selectedLocation ? (
-          <MapPreview lat={selectedLocation.lat} long={selectedLocation.long} />
+          <View style={styles.mapPreview}>
+            <MapPreview
+              lat={selectedLocation.lat}
+              long={selectedLocation.long}
+            />
+          </View>
         ) : (
           <Text></Text>
         )}
         <View style={styles.distanceContainer}>
+          <Text style={styles.textBold}>Step 3: Select a distance in km's</Text>
           <View style={styles.chooseDistance}>
             <InputSpinner
               max={20}
               min={0}
               step={1}
-              colorMax={'#f04048'}
-              colorMin={'#40c5f4'}
+              colorMax={Colours.highlightColour}
+              colorMin={Colours.primaryColour}
               value={distance}
               onChange={setDistance}
             />
           </View>
         </View>
         {selectedLocation && distance && cuisineToPass.length === 7 ? (
-          <Button
-            title="Lets use the spinner to find some dinner"
-            onPress={() =>
-              props.navigation.navigate('Spinner', {
-                paramKey: {
-                  selectedLocation: selectedLocation,
-                  distance: distance,
-                  cuisines: cuisineToPass,
-                },
-              })
-            }
-          />
+          <View style={styles.spinnerButtonContainer}>
+            <CustomButton
+              onPress={() =>
+                props.navigation.navigate('Spinner', {
+                  paramKey: {
+                    selectedLocation: selectedLocation,
+                    distance: distance,
+                    cuisines: cuisineToPass,
+                  },
+                })
+              }
+              label="To the spinner!"
+            />
+          </View>
         ) : (
-          <Text>
-            We need cuisines, a location and distance first I'm afraid!
-          </Text>
+          <Text></Text>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -247,20 +268,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#ccc',
-    marginBottom: 15,
+    backgroundColor: Colours.backingColour,
   },
   scrollView: {
-    // backgroundColor: 'blue',
     width: '100%',
   },
   chooseCuisineType: {
-    // backgroundColor: 'orange',
-    borderColor: 'black',
-    borderWidth: 1,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  alterView: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cuisinePreview: {
     marginBottom: 10,
@@ -271,20 +291,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  currentLocation: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   chooseLocation: {
-    // backgroundColor: '#fff',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  mapPreview: { alignItems: 'center', justifyContent: 'center' },
   distanceContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10,
   },
   chooseDistance: {
-    // backgroundColor: 'orange',
     width: '60%',
-    marginVertical: 20,
+    marginVertical: 30,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -305,12 +330,26 @@ const styles = StyleSheet.create({
   inputView: {
     backgroundColor: '#FFC0CB',
     borderRadius: 30,
-    width: '70%',
+    width: '80%',
     height: 45,
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  spinnerButtonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontFamily: 'open-sans',
+    fontSize: 20,
+    color: Colours.borderColour,
+  },
+  textBold: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 20,
+    color: Colours.borderColour,
   },
 });
 
