@@ -10,9 +10,12 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   FlatList,
+  SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
+import MapPreview from '../components/MapPreview';
 import InputSpinner from 'react-native-input-spinner';
 import * as Location from 'expo-location';
 import { useSelector, useDispatch } from 'react-redux';
@@ -82,7 +85,7 @@ function HomeScreen(props) {
       const location = await Location.geocodeAsync(userTypedLocation, {
         timeout: 5000,
       });
-      console.log(location);
+      // console.log(location);
       setSelectedLocation({
         lat: location[0].latitude,
         long: location[0].longitude,
@@ -144,26 +147,29 @@ function HomeScreen(props) {
   });
 
   return (
-    <View style={styles.container}>
-      {cuisineToPass.length === 7 ? (
-        <View>
-          <Text>Woo hoo we have 7 cuisinese!</Text>
-          <Button title="Alter my choices" onPress={resetCuisineHandler} />
-        </View>
-      ) : (
-        <View style={styles.chooseCuisineType}>
-          <Text>Input Cuisine</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setSelectedCuisine}
-            value={selectedCuisine}
-            placeholder="useless placeholder"
-          />
-          <Button title="Submit Cuisine" onPress={cuisineChoiceHandler} />
-          <Text>{cuisineToPass.length}</Text>
-        </View>
-      )}
-      <View style={styles.cuisinePreview}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        {cuisineToPass.length === 7 ? (
+          <View>
+            <Text>Woo hoo we have 7 cuisines!</Text>
+            <Button title="Alter my choices" onPress={resetCuisineHandler} />
+          </View>
+        ) : (
+          <View style={styles.chooseCuisineType}>
+            <Text>Input Cuisine</Text>
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={setSelectedCuisine}
+                value={selectedCuisine}
+                placeholder="Choose your cuisines!"
+              />
+            </View>
+            <Button title="Submit Cuisine" onPress={cuisineChoiceHandler} />
+            <Text>{cuisineToPass.length}</Text>
+          </View>
+        )}
+        {/* <View style={styles.cuisinePreview}>
         <Text>You have chosen</Text>
         <FlatList
           keyExtractor={(item, index) => index}
@@ -171,61 +177,69 @@ function HomeScreen(props) {
           numColumns={2}
           renderItem={renderCuisineChoice}
         />
-      </View>
-      <Button
-        title="Get Current Location"
-        onPress={getCurrentLocationHandler}
-      />
-      <View style={styles.chooseLocation}>
-        <Text>Don't want to use you current location?</Text>
-        <Text>Please enter a town, postcode, station etc</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Search for a specific location!"
-          autoCapitalize="none"
-          value={userTypedLocation}
-          onChangeText={setUserTypedLocation}
-        />
+      </View> */}
         <Button
-          title="Get my chosen location"
-          onPress={getSelectedLocationHandler}
+          title="Get Current Location"
+          onPress={getCurrentLocationHandler}
         />
-      </View>
-      <View>
-        {isFetching ? (
-          <ActivityIndicator size="large" />
+        <View style={styles.chooseLocation}>
+          <Text>Don't want to use you current location?</Text>
+          <Text>Please enter a town, postcode, station etc</Text>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Search for a specific location!"
+              autoCapitalize="none"
+              value={userTypedLocation}
+              onChangeText={setUserTypedLocation}
+            />
+          </View>
+          <Button
+            title="Get my chosen location"
+            onPress={getSelectedLocationHandler}
+          />
+        </View>
+        <View>
+          {isFetching ? <ActivityIndicator size="large" /> : <Text></Text>}
+        </View>
+        {selectedLocation ? (
+          <MapPreview lat={selectedLocation.lat} long={selectedLocation.long} />
         ) : (
-          <Text>No Location Chosen Yet</Text>
+          <Text></Text>
         )}
-      </View>
-      <View style={styles.chooseDistance}>
-        <InputSpinner
-          max={20}
-          min={0}
-          step={1}
-          colorMax={'#f04048'}
-          colorMin={'#40c5f4'}
-          value={distance}
-          onChange={setDistance}
-        />
-      </View>
-      {selectedLocation && distance && cuisineToPass.length === 7 ? (
-        <Button
-          title="Lets use the spinner to find some dinner"
-          onPress={() =>
-            props.navigation.navigate('Spinner', {
-              paramKey: {
-                selectedLocation: selectedLocation,
-                distance: distance,
-                cuisines: cuisineToPass,
-              },
-            })
-          }
-        />
-      ) : (
-        <Text>We need a location first I'm afraid!</Text>
-      )}
-    </View>
+        <View style={styles.distanceContainer}>
+          <View style={styles.chooseDistance}>
+            <InputSpinner
+              max={20}
+              min={0}
+              step={1}
+              colorMax={'#f04048'}
+              colorMin={'#40c5f4'}
+              value={distance}
+              onChange={setDistance}
+            />
+          </View>
+        </View>
+        {selectedLocation && distance && cuisineToPass.length === 7 ? (
+          <Button
+            title="Lets use the spinner to find some dinner"
+            onPress={() =>
+              props.navigation.navigate('Spinner', {
+                paramKey: {
+                  selectedLocation: selectedLocation,
+                  distance: distance,
+                  cuisines: cuisineToPass,
+                },
+              })
+            }
+          />
+        ) : (
+          <Text>
+            We need cuisines, a location and distance first I'm afraid!
+          </Text>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -236,10 +250,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     marginBottom: 15,
   },
+  scrollView: {
+    // backgroundColor: 'blue',
+    width: '100%',
+  },
   chooseCuisineType: {
-    backgroundColor: 'pink',
+    // backgroundColor: 'orange',
     borderColor: 'black',
     borderWidth: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cuisinePreview: {
     marginBottom: 10,
@@ -247,17 +268,26 @@ const styles = StyleSheet.create({
     height: 100,
     borderColor: 'black',
     borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   chooseLocation: {
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  distanceContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   chooseDistance: {
     // backgroundColor: 'orange',
-    width: '80%',
-    height: 50,
-    marginTop: 20,
-    marginBottom: 20,
+    width: '60%',
+    marginVertical: 20,
     height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   distanceTextInput: {
     width: '100%',
@@ -265,9 +295,22 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   textInput: {
-    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
     padding: 10,
     fontSize: 20,
+    width: '80%',
+  },
+  inputView: {
+    backgroundColor: '#FFC0CB',
+    borderRadius: 30,
+    width: '70%',
+    height: 45,
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

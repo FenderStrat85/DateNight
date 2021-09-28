@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
 import WheelOfFortune from 'react-native-wheel-of-fortune';
 // import WheelOfFortune from '../components/Spinner';
 
@@ -15,6 +15,8 @@ function SpinnerScreen(props) {
 
   console.log('cuisines passed from home screen', cuisines);
 
+  //Default participants - could add in extra functionality to allow
+  //app to choose randomly for them
   // const participants = [
   //   'Try Again',
   //   'Japanese',
@@ -65,48 +67,52 @@ function SpinnerScreen(props) {
     //setting button to be try again seems to allow the spinner to re-render with
     //no issues
     <View style={styles.container}>
-      <WheelOfFortune options={wheelOptions} />
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.spinnerContainer}>
+          <WheelOfFortune options={wheelOptions} />
 
-      {/* <Button
+          {/* <Button
         title="Press me"
         onPress={() => {
           this.child._onPress();
         }}
       /> */}
-      <View style={styles.controlView}>
-        <Button
-          title="Spin me"
-          onPress={() => {
-            this.child._tryAgain();
-          }}
-        />
-        {winnerIndex && winnerValue ? (
-          <Text>
-            We have a winnerIndex:{winnerIndex} and we have a winnerValue
-            {winnerValue}
-          </Text>
-        ) : (
-          <Text>No winners yet....</Text>
-        )}
-        {/* </View>
-      <View > */}
-        {winnerIndex ? (
+        </View>
+        <View style={styles.controlView}>
           <Button
-            title="Go to restaurant list"
-            onPress={() =>
-              props.navigation.navigate('RestaurantList', {
-                paramKey: {
-                  selectedCuisine: winnerValue,
-                  chosenLocation: location,
-                  chosenDistance: distance,
-                },
-              })
-            }
+            title="Spin me"
+            onPress={() => {
+              this.child._tryAgain();
+            }}
           />
-        ) : (
-          <Text>Click the button to help find a restaurant</Text>
-        )}
-      </View>
+          {winnerIndex && winnerValue ? (
+            <Text>
+              We have a winnerIndex:{winnerIndex} and we have a winnerValue
+              {winnerValue}
+            </Text>
+          ) : (
+            <Text>No winners yet....</Text>
+          )}
+          {/* </View>
+      <View > */}
+          {winnerIndex ? (
+            <Button
+              title="Go to restaurant list"
+              onPress={() =>
+                props.navigation.navigate('RestaurantList', {
+                  paramKey: {
+                    selectedCuisine: winnerValue,
+                    chosenLocation: location,
+                    chosenDistance: distance,
+                  },
+                })
+              }
+            />
+          ) : (
+            <Text>Click the button to help find a restaurant</Text>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -116,6 +122,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ccc',
     alignItems: 'center',
+  },
+  scrollView: {
+    width: '100%',
+  },
+  spinnerContainer: {
+    width: '100%',
+    height: 400,
   },
   controlView: {
     justifyContent: 'center',

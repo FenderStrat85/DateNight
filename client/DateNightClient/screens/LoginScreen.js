@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import { BACKEND_SERVER } from '@env';
 import { useDispatch, useSelector } from 'react-redux';
+import InputView from '../components/InputView';
 
 function LoginScreen(props) {
   const [email, setEmail] = React.useState('');
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   textInput: {
     justifyContent: 'center',
