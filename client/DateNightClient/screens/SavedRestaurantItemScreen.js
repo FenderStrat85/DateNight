@@ -84,7 +84,9 @@ function SavedRestaurantItemScreen(props) {
             Price: {setPriceLevel(restaurantData.price)}
           </Text>
         </View>
-        <MapPreview lat={restaurantLat} long={restaurantLong} />
+        <View style={styles.mapView}>
+          <MapPreview lat={restaurantLat} long={restaurantLong} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -103,7 +105,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
+  mapView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   infoContainer: {
     height: '20%',
   },
