@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import { BACKEND_SERVER } from '@env';
 import { useDispatch, useSelector } from 'react-redux';
-import InputView from '../components/InputView';
+import Colours from '../constants/Colours';
+import CustomButton from '../components/CustomButton';
 
 function LoginScreen(props) {
   const [email, setEmail] = React.useState('');
@@ -49,7 +50,6 @@ function LoginScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text>This is the new login screen in the screens folder</Text>
       <View style={styles.inputView}>
         <TextInput
           style={styles.textInput}
@@ -71,11 +71,20 @@ function LoginScreen(props) {
           secureTextEntry
         />
       </View>
-      <Button title="Sign In" onPress={() => login(email, password)} />
-      <Button
-        title="Create Account"
-        onPress={() => register(email, password)}
-      />
+      <View style={styles.button}>
+        <Button
+          color={Colours.primaryColour}
+          title="Sign In"
+          onPress={() => login(email, password)}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          color={Colours.primaryColour}
+          title="Create Account"
+          onPress={() => register(email, password)}
+        />
+      </View>
     </View>
   );
 }
@@ -85,9 +94,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Colours.backingColour,
   },
   inputView: {
     backgroundColor: '#FFC0CB',
+    // backgroundColor: Colours.primaryColour,
     borderRadius: 30,
     width: '70%',
     height: 45,
@@ -103,6 +114,18 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     width: '80%',
+    fontFamily: 'open-sans',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Colours.borderColour,
+    width: '40%',
+    borderRadius: 30,
+    marginVertical: 10,
+    padding: 10,
+    height: 60,
   },
 });
 
