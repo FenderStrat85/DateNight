@@ -13,12 +13,13 @@ const MapPreview = (props) => {
 
 const styles = StyleSheet.create({
   mapPreview: {
-    marginBottom: 10,
+    // marginBottom: 10,
     width: 400,
     height: 200,
     borderColor: 'black',
     borderWidth: 1,
-    margin: 20,
+    marginTop: 20,
+    marginBottom: 60,
   },
 });
 

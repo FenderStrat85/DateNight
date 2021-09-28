@@ -34,17 +34,11 @@ const reducer = (state = initialState, action) => {
         userRestaurants: [...state.userRestaurants, action.payload],
       };
     case 'DELETE_RESTAURANT':
-      // console.log('I am in the delete reducer');
       let copy = [...state.userRestaurants];
-      console.log('Delete reducer line 32 copied array reducer', copy);
-      console.log(action.payload.resId);
       const filteredCopy = copy.filter((restaurant) => {
         return restaurant.photo !== action.payload.resId;
       });
-      console.log(
-        ' Delete Reducer line 36 copied array after being filtered',
-        copy,
-      );
+
       return {
         ...state,
         userRestaurants: filteredCopy,

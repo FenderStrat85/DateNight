@@ -13,7 +13,6 @@ import SavedRestaurantListScreen from '../screens/SavedRestaurantListScreen';
 import SavedRestaurantItemScreen from '../screens/SavedRestaurantItemScreen';
 import { Ionicons } from '@expo/vector-icons';
 import Colours from '../constants/Colours';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const RootStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -39,8 +38,8 @@ function ScreenNavigator() {
           fontFamily: 'open-sans-bold',
           color: Colours.primaryColour,
         },
-        // headerTintColor: Colours.primaryColour,
-        // headerBackTitle: 'Back',
+        headerTintColor: Colours.primaryColour,
+        headerBackTitle: 'Back',
       }}
     >
       <MainStack.Screen name="Home" component={HomeScreen} />
@@ -102,6 +101,7 @@ function MainNavigator() {
       ) : (
         <Tab.Navigator
           screenOptions={({ route }) => ({
+            headerShown: false,
             tabBarIcon: ({ color, size }) => {
               let iconName;
               if (route.name === 'Choose Restaurants') {
@@ -118,10 +118,6 @@ function MainNavigator() {
               fontSize: 12,
               fontFamily: 'open-sans',
             },
-            // tabBarStyle: {
-            //   marginBottom: 2,
-            //   paddingTop: 2,
-            // },
           })}
         >
           <Tab.Screen

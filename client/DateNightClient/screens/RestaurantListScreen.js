@@ -11,7 +11,8 @@ import { API_KEY, MESSAGE } from '@env';
 import DATA from '../dummyData';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import CustomHeaderButton from '../components/CustomHeaderButton';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
@@ -103,7 +104,7 @@ function RestaurantListScreen(props) {
         <View style={styles.getRestaurantContainer}>
           <View style={styles.textView}>
             <Text
-              style={styles.textBold}
+              style={styles.textBoldCenter}
             >{`Click the button below to find some awesome ${selectedCuisine} restaurants!`}</Text>
           </View>
           <CustomButton
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
   flatList: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 100,
   },
   noRestaurantContainer: {
     flex: 1,
@@ -205,7 +207,6 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     //for android
     elevation: 8,
-    borderWidth: 0.5,
   },
   text: {
     fontSize: 'open-sans',
@@ -216,6 +217,11 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-bold',
     fontSize: 20,
     textAlign: 'right',
+  },
+  textBoldCenter: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 20,
+    textAlign: 'center',
   },
   textView: {
     alignItems: 'center',

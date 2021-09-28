@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Button,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import ImagePreview from '../components/ImagePreview';
 import MapPreview from '../components/MapPreview';
 import { API_KEY, BACKEND_SERVER } from '@env';
@@ -72,6 +80,7 @@ function RestaurantItemScreen(props) {
           <Item
             title="button"
             iconName={!isSaved ? 'ios-star-outline' : 'ios-star'}
+            color={Colours.primaryColour}
             onPress={() => saveRestaurant(user_id, restaurantData)}
           />
         </HeaderButtons>
@@ -80,24 +89,30 @@ function RestaurantItemScreen(props) {
   });
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textBold}>{props.route.params.paramKey.name}</Text>
-      <ImagePreview imageUrl={imageToken} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.text}>Average Rating: {restaurantData.rating}</Text>
-        <Text style={styles.text}>
-          Total Reviews: {restaurantData.totalRatings}
-        </Text>
-        <Text style={styles.text}>
-          Open now:{' '}
-          {restaurantData.openNow ? <Text>Yes</Text> : <Text>No</Text>}
-        </Text>
-        <Text style={styles.text}>
-          Price: {setPriceLevel(restaurantData.price)}
-        </Text>
-      </View>
-      <MapPreview lat={restaurantLat} long={restaurantLong} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.textBold}>{props.route.params.paramKey.name}</Text>
+        <View style={styles.imageView}>
+          <ImagePreview imageUrl={imageToken} />
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.text}>
+            Average Rating: {restaurantData.rating}
+          </Text>
+          <Text style={styles.text}>
+            Total Reviews: {restaurantData.totalRatings}
+          </Text>
+          <Text style={styles.text}>
+            Open now:{' '}
+            {restaurantData.openNow ? <Text>Yes</Text> : <Text>No</Text>}
+          </Text>
+          <Text style={styles.text}>
+            Price: {setPriceLevel(restaurantData.price)}
+          </Text>
+        </View>
+        <MapPreview lat={restaurantLat} long={restaurantLong} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -108,7 +123,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colours.backingColour,
   },
-  infoContainer: {},
+  scrollView: {
+    width: '100%',
+  },
+  imageView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoContainer: {
+    height: '20%',
+  },
   text: {
     fontSize: 20,
     fontFamily: 'open-sans',

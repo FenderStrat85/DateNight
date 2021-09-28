@@ -82,6 +82,10 @@ function HomeScreen(props) {
 
   const getSelectedLocationHandler = async () => {
     console.log(userTypedLocation);
+    if (!userTypedLocation) {
+      Alert.alert(`Please enter a place`);
+      return;
+    }
     try {
       setIsFetching(true);
       const location = await Location.geocodeAsync(userTypedLocation, {
@@ -103,6 +107,11 @@ function HomeScreen(props) {
   };
 
   const cuisineChoiceHandler = () => {
+    console.log(selectedCuisine);
+    if (!selectedCuisine) {
+      Alert.alert('Please enter a cuisine type');
+      return;
+    }
     setCuisineToPass([...cuisineToPass, selectedCuisine]);
     setSelectedCuisine();
   };
@@ -214,7 +223,7 @@ function HomeScreen(props) {
           </View>
           <CustomButton
             onPress={getSelectedLocationHandler}
-            label="Get my chosen location"
+            label="Get chosen location"
           />
         </View>
         <View>
@@ -231,7 +240,9 @@ function HomeScreen(props) {
           <Text></Text>
         )}
         <View style={styles.distanceContainer}>
-          <Text style={styles.textBold}>Step 3: Select a distance in km's</Text>
+          <Text style={styles.textBold}>
+            Step 3: How far are you willing to travel in km's?
+          </Text>
           <View style={styles.chooseDistance}>
             <InputSpinner
               max={20}
@@ -280,10 +291,12 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
   },
   alterView: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
   },
   cuisinePreview: {
     marginBottom: 10,
@@ -351,11 +364,14 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans',
     fontSize: 20,
     color: Colours.borderColour,
+    textAlign: 'center',
   },
   textBold: {
     fontFamily: 'open-sans-bold',
     fontSize: 20,
     color: Colours.borderColour,
+    textAlign: 'center',
+    width: '80%',
   },
   buttonHider: {
     height: 90,

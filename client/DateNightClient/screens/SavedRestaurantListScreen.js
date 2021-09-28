@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 import { useSelector, useDispatch } from 'react-redux';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
@@ -16,13 +16,13 @@ function SavedRestaurantListScreen(props) {
   //sets initial state, but this is no longer used.
   //userRestaurants is used to render to render the data now
   let userRestaurants = useSelector((state) => {
-    console.log(
-      'SvedRestaurantListScreen userRestaurant list from reducer',
-      state.user.userRestaurants,
-    );
+    // console.log(
+    //   'SvedRestaurantListScreen userRestaurant list from reducer',
+    //   state.user.userRestaurants,
+    // );
     return state.user.userRestaurants;
   });
-  const [restaurantList, setRestaurantList] = useState(userRestaurants);
+  const [restaurantList, setRestaurantList] = useState();
 
   console.log(
     'SavedRestaurantListScreen userRestaurants.length',
@@ -38,7 +38,7 @@ function SavedRestaurantListScreen(props) {
 
   //sort by price using redux
   const sortByPrice = () => {
-    dispatch({ type: 'SORT_BY_RATING' });
+    dispatch({ type: 'SORT_BY_PRICE' });
   };
 
   const setPriceLevel = (price) => {
@@ -103,7 +103,7 @@ function SavedRestaurantListScreen(props) {
             <CustomButton
               style={styles.button}
               onPress={() => sortByRating()}
-              label="Sort by Price"
+              label="Sort by Rating"
             />
           </View>
           <View style={styles.flatListContainer}>
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
   flatList: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 100,
   },
   buttonContainer: {
     flexDirection: 'row',

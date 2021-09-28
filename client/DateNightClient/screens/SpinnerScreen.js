@@ -16,7 +16,7 @@ function SpinnerScreen(props) {
   const distance = props.route.params.paramKey.distance * 1000;
   const cuisines = props.route.params.paramKey.cuisines;
 
-  console.log('cuisines passed from home screen', cuisines);
+  // console.log('cuisines passed from home screen', cuisines);
 
   //Default participants - could add in extra functionality to allow
   //app to choose randomly for them
@@ -67,20 +67,21 @@ function SpinnerScreen(props) {
     onRef: (ref) => (this.child = ref),
   };
 
-  React.useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item
-            title="back"
-            iconName={'arrow-back'}
-            color={Colours.primaryColour}
-            onPress={() => props.navigation.navigate('Home')}
-          />
-        </HeaderButtons>
-      ),
-    });
-  });
+  //works on this screen but does not work when moving from list to spinner
+  // React.useLayoutEffect(() => {
+  //   props.navigation.setOptions({
+  //     headerLeft: () => (
+  //       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+  //         <Item
+  //           title="back"
+  //           iconName={'arrow-back'}
+  //           color={Colours.primaryColour}
+  //           onPress={() => props.navigation.navigate('Home')}
+  //         />
+  //       </HeaderButtons>
+  //     ),
+  //   });
+  // });
 
   return (
     //setting button to be try again seems to allow the spinner to re-render with

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import ImagePreview from '../components/ImagePreview';
 import MapPreview from '../components/MapPreview';
@@ -58,7 +58,7 @@ function SavedRestaurantItemScreen(props) {
           <Item
             title="button"
             iconName={'trash-outline'}
-            color={Colours.highlightColour}
+            color={Colours.primaryColour}
             onPress={() => deleteRestaurant(user_id, restaurantData.photo)}
           />
         </HeaderButtons>
@@ -67,20 +67,26 @@ function SavedRestaurantItemScreen(props) {
   });
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textBold}>{props.route.params.paramKey.name}</Text>
-      <ImagePreview imageUrl={imageToken} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.text}>Average Rating: {restaurantData.rating}</Text>
-        <Text style={styles.text}>
-          Total Reviews: {restaurantData.totalRatings}
-        </Text>
-        <Text style={styles.text}>
-          Price: {setPriceLevel(restaurantData.price)}
-        </Text>
-      </View>
-      <MapPreview lat={restaurantLat} long={restaurantLong} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.textBold}>{props.route.params.paramKey.name}</Text>
+        <View style={styles.imageView}>
+          <ImagePreview imageUrl={imageToken} />
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.text}>
+            Average Rating: {restaurantData.rating}
+          </Text>
+          <Text style={styles.text}>
+            Total Reviews: {restaurantData.totalRatings}
+          </Text>
+          <Text style={styles.text}>
+            Price: {setPriceLevel(restaurantData.price)}
+          </Text>
+        </View>
+        <MapPreview lat={restaurantLat} long={restaurantLong} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -88,9 +94,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'pink',
+    backgroundColor: Colours.backingColour,
   },
-  infoContainer: {},
+  scrollView: {
+    width: '100%',
+  },
+  imageView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  infoContainer: {
+    height: '20%',
+  },
+
   text: {
     fontSize: 20,
     fontFamily: 'open-sans',

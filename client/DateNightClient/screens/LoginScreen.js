@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-bold',
     fontSize: 40,
     textAlign: 'center',
-    color: Colours.highlightColour,
+    color: Colours.highLightColour,
   },
   inputView: {
     backgroundColor: '#FFC0CB',
