@@ -11,6 +11,9 @@ import RestaurantItemScreen from '../screens/RestaurantItemScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SavedRestaurantListScreen from '../screens/SavedRestaurantListScreen';
 import SavedRestaurantItemScreen from '../screens/SavedRestaurantItemScreen';
+import { Ionicons } from '@expo/vector-icons';
+import Colours from '../constants/Colours';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const RootStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -60,6 +63,9 @@ function SavedStackNavigator() {
       <SaveStack.Screen
         name="SavedRestaurantItemScreen"
         component={SavedRestaurantItemScreen}
+        options={({ route }) => ({
+          title: route.params.paramKey.name,
+        })}
       />
     </SaveStack.Navigator>
   );
@@ -74,12 +80,43 @@ function MainNavigator() {
       {loggedInUser.isAuthenticated == false ? (
         <RootNavigator />
       ) : (
-        // <ScreenNavigator />
-        <Tab.Navigator>
-          <Tab.Screen name="Choose Restaurants" component={ScreenNavigator} />
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
+              if (route.name === 'ChooseRestaurants') {
+                iconName = 'ios-restaurant';
+              } else if (route.name === 'SavedRestaurants') {
+                iconName = 'ios-star';
+              }
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+
+            tabBarActiveTintColor: Colours.highLightColour,
+            tabBarInactiveTintColor: Colours.primaryColour,
+            tabBarLabelStyle: {
+              fontSize: 12,
+              fontFamily: 'open-sans',
+            },
+            tabBarStyle: {
+              marginBottom: 2,
+              paddingTop: 2,
+            },
+          })}
+        >
           <Tab.Screen
-            name="Saved Restaurants"
+            name="ChooseRestaurants"
+            component={ScreenNavigator}
+            options={{
+              tabBarLabel: 'Choose Restaurants',
+            }}
+          />
+          <Tab.Screen
+            name="SavedRestaurants"
             component={SavedStackNavigator}
+            options={{
+              tabBarLabel: 'Saved Restaurants',
+            }}
           />
         </Tab.Navigator>
       )}

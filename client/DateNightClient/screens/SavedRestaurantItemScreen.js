@@ -6,6 +6,7 @@ import MapPreview from '../components/MapPreview';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { BACKEND_SERVER } from '@env';
+import Colours from '../constants/Colours';
 
 function SavedRestaurantItemScreen(props) {
   let imageToken = props.route.params.paramKey.photo;
@@ -52,6 +53,7 @@ function SavedRestaurantItemScreen(props) {
           <Item
             title="button"
             iconName={'trash-outline'}
+            color={Colours.highlightColour}
             onPress={() => deleteRestaurant(user_id, restaurantData.photo)}
           />
         </HeaderButtons>
@@ -61,8 +63,15 @@ function SavedRestaurantItemScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text>{props.route.params.paramKey.name}</Text>
+      <Text style={styles.textBold}>{props.route.params.paramKey.name}</Text>
       <ImagePreview imageUrl={imageToken} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.text}>Average Rating: {restaurantData.rating}</Text>
+        <Text style={styles.text}>
+          Total Reviews: {restaurantData.totalRatings}
+        </Text>
+        <Text style={styles.text}>Price: </Text>
+      </View>
       <MapPreview lat={restaurantLat} long={restaurantLong} />
     </View>
   );
@@ -73,6 +82,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'pink',
+  },
+  infoContainer: {},
+  text: {
+    fontSize: 20,
+    fontFamily: 'open-sans',
+    textAlign: 'center',
+  },
+  textBold: {
+    fontSize: 20,
+    fontFamily: 'open-sans-bold',
+    textAlign: 'center',
+    margin: 20,
   },
 });
 

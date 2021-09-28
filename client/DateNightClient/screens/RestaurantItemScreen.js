@@ -87,7 +87,7 @@ function RestaurantItemScreen(props) {
           Open now:{' '}
           {restaurantData.openNow ? <Text>Yes</Text> : <Text>No</Text>}
         </Text>
-        <Text style={styles.text}>Price: {price}</Text>
+        <Text style={styles.text}>Price: </Text>
       </View>
       <MapPreview lat={restaurantLat} long={restaurantLong} />
     </View>
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'open-sans-bold',
     textAlign: 'center',
+    margin: 20,
   },
 });
 
