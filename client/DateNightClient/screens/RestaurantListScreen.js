@@ -10,7 +10,7 @@ import {
 import { API_KEY, MESSAGE } from '@env';
 import DATA from '../dummyData';
 import Colours from '../constants/Colours';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import CustomButton from '../components/CustomButton';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
@@ -92,9 +92,19 @@ function RestaurantListScreen(props) {
     <View style={styles.container}>
       {!restaurantList ? (
         <View style={styles.getRestaurantContainer}>
-          <Button
+          {/* <Button
             title={`Click on me to find some awesome ${selectedCuisine} restaurants!`}
             onPress={getRestaurantsHandler}
+          /> */}
+          <View style={styles.textView}>
+            <Text
+              style={styles.textBold}
+            >{`Click the button below to find some awesome ${selectedCuisine} restaurants!`}</Text>
+          </View>
+          <CustomButton
+            style={styles.button}
+            onPress={getRestaurantsHandler}
+            label="Get my restaurants!"
           />
         </View>
       ) : (
@@ -166,6 +176,16 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     //for android
     elevation: 8,
+  },
+  textBold: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  textView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 30,
   },
 });
 
