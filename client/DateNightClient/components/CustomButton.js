@@ -2,6 +2,9 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Colours from '../constants/Colours';
 
+//used on all buttons throughout the app, onPress and label is passed through props
+//the style prop below merges
+
 function CustomButton(props) {
   return (
     <TouchableOpacity
