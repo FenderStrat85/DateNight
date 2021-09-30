@@ -30,7 +30,10 @@ function RestaurantListScreen(props) {
       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&types=restaurant&radius=${distance}&keyword=${selectedCuisine}, &key=${API_KEY}`,
     )
       .then((res) => res.json())
-      .then((item) => setRestaurantList(item.results));
+      .then((item) => setRestaurantList(item.results))
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   //using dummy data

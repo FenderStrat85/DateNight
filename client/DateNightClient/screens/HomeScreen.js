@@ -120,10 +120,6 @@ function HomeScreen(props) {
     setCuisineToPass([]);
   };
 
-  const renderCuisineChoice = (itemData) => {
-    return <Text> {itemData.item} </Text>;
-  };
-
   const logout = (user_id) => {
     return fetch(`${BACKEND_SERVER}/logout`, {
       method: 'POST',
@@ -140,6 +136,9 @@ function HomeScreen(props) {
         if (item.id) {
           dispatch({ type: 'LOGOUT' });
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -189,15 +188,6 @@ function HomeScreen(props) {
             />
           </View>
         )}
-        {/* <View style={styles.cuisinePreview}>
-        <Text>You have chosen</Text>
-        <FlatList
-          keyExtractor={(item, index) => index}
-          data={cuisineToPass}
-          numColumns={2}
-          renderItem={renderCuisineChoice}
-        />
-      </View> */}
         <View style={styles.currentLocation}>
           <Text style={styles.textBold}>Step 2: Get a Location</Text>
           <CustomButton

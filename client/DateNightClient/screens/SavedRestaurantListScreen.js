@@ -16,10 +16,6 @@ function SavedRestaurantListScreen(props) {
   //sets initial state, but this is no longer used.
   //userRestaurants is used to render to render the data now
   let userRestaurants = useSelector((state) => {
-    // console.log(
-    //   'SvedRestaurantListScreen userRestaurant list from reducer',
-    //   state.user.userRestaurants,
-    // );
     return state.user.userRestaurants;
   });
   const [restaurantList, setRestaurantList] = useState();

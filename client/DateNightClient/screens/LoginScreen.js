@@ -29,6 +29,9 @@ function LoginScreen(props) {
         if (userInfo._id) {
           dispatch({ type: 'LOGIN', payload: userInfo });
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -45,6 +48,9 @@ function LoginScreen(props) {
       .then((item) => {
         userInfo = item;
         dispatch({ type: 'REGISTER', payload: item });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
