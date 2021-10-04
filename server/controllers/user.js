@@ -83,12 +83,8 @@ const saveRestaurant = async (req, res) => {
         longitude: restaurantData.longitude,
         latitude: restaurantData.latitude,
       });
-      console.log('created restaurant inside if statement', restaurant);
     }
-    console.log('new saved restaurant', restaurant);
     await user.save();
-    console.log('user.restaurants', user.restaurants);
-    console.log('full user profile line 92 - save function', user);
     res.status(200).send(restaurantData);
   } catch (error) {
     console.log(error);

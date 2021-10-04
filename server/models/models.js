@@ -19,8 +19,8 @@ const userSchema = new Schema({
 
 userSchema.virtual('data', {
   ref: 'Restaurant', // The model to use
-  localField: 'restaurants', // Find people where `localField`
-  foreignField: 'photo', // is equal to `foreignField`
+  localField: 'restaurants', // Find restaurants where `localField` - localField being the userSchema
+  foreignField: 'photo', // is equal to `foreignField` - foreignField being the restaurantSchema
   // If `justOne` is true, 'members' will be a single doc as opposed to
   // an array. `justOne` is false by default.
   justOne: false,
@@ -36,8 +36,6 @@ const restaurantSchema = new Schema({
   price: Number,
   rating: Number,
   totalRatings: Number,
-  // isSaved: Boolean,
-  //need to add all properties
 });
 
 const User = mongoose.model('User', userSchema);
