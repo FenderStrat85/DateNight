@@ -5,9 +5,9 @@ mongoose.connect('mongodb://localhost/db_dateNight'),
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },
-  (err) => {
-    if (err) return console.log(err);
-    console.log('connected to database');
-  };
+  console.log('connected to database');
+(err) => {
+  if (err) return console.log(err);
+};
 
 module.exports = mongoose;

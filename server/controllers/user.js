@@ -3,7 +3,6 @@ const { User, Restaurant } = require('../models/models');
 
 const create = async (req, res) => {
   const { email, password } = req.body;
-  console.log('inside create function');
   let salt = bcrypt.genSaltSync();
   let passwordHash = bcrypt.hashSync(password, salt);
 
@@ -16,14 +15,12 @@ const create = async (req, res) => {
       password: passwordHash,
     });
     req.session.uid = createUser._id;
-    console.log('user created big success', createUser);
     //need to change res.send to createUser.email
     res.status(200).send(createUser);
   }
 };
 
 const login = async (req, res) => {
-  console.log('inside login function');
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -33,19 +30,15 @@ const login = async (req, res) => {
       restaurantArray.push(restaurant);
     });
     if (!user) {
-      console.log('user does not exist');
       throw new Error();
     }
     const validatedPassword = await bcrypt.compare(password, user.password);
 
     if (!validatedPassword) {
-      console.log('I do not exist');
       throw new Error();
     } else {
       req.session.uid = user._id;
       user.restaurants = restaurantArray;
-      // console.log('user info at login', user);
-      // console.log('users restaurants', user.restaurants);
       res.status(200).send(user);
     }
   } catch (error) {
@@ -56,11 +49,8 @@ const login = async (req, res) => {
 const saveRestaurant = async (req, res) => {
   try {
     const { user_id, restaurantData } = req.body;
-    console.log('restaurantData', restaurantData);
     const user = await User.findOne({ _id: user_id });
-    console.log(user);
     const isSaved = user.restaurants.find((id) => id === restaurantData.photo);
-    console.log(isSaved);
     if (isSaved) {
       return res.status(402).send(restaurantData);
     }
@@ -70,8 +60,6 @@ const saveRestaurant = async (req, res) => {
       photo: restaurantData.photo,
     });
     if (!restaurant) {
-      console.log('inside if statement');
-      console.log('restaurantData', restaurantData);
       const restaurant = await Restaurant.create({
         name: restaurantData.name,
         photo: restaurantData.photo,
@@ -94,18 +82,13 @@ const saveRestaurant = async (req, res) => {
 //filter restaurants array to remove based on the photo property
 
 const deleteRestaurant = async (req, res) => {
-  console.log('I am in the delete function');
   try {
     const { user_id } = req.body;
     const { id } = req.params;
     const user = await User.findOne({ _id: user_id });
-    console.log(user);
-    console.log('restaurant list before update', user.restaurants);
-    console.log(id);
     const updatedRestaurants = user.restaurants.filter(
       (restaurant) => restaurant !== id,
     );
-    console.log('updatedRestaurants', updatedRestaurants);
     user.restaurants = updatedRestaurants;
     user.save();
     res.status(200).send({ resId: id });
@@ -115,15 +98,12 @@ const deleteRestaurant = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  console.log(req.body);
-  console.log('session destroyed');
   req.session.destroy((error) => {
     if (error) {
       res
         .status(500)
         .send({ error, message: 'Could not log out, please try again' });
     } else {
-      console.log('logging out');
       res.clearCookie('sid');
       res.status(200).send({ id: req.body.user_id });
     }
