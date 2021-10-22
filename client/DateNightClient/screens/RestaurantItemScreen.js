@@ -51,7 +51,6 @@ function RestaurantItemScreen(props) {
         .then((res) => res.json())
         .then((item) => {
           let restaurantInfo = item;
-          console.log(restaurantInfo);
           dispatch({ type: 'SAVE_RESTAURANT', payload: restaurantInfo });
         })
         .catch((error) => console.log(error));

@@ -20,7 +20,7 @@ import CustomButton from '../components/CustomButton';
 import LogoutButton from '../components/LogoutButton';
 
 function HomeScreen(props) {
-  //cusine from the users input
+  //cuisine from the users input
   const [selectedCuisine, setSelectedCuisine] = useState();
   //array of all cuisines inputted that is passed onto the spinner screen
   const [cuisineToPass, setCuisineToPass] = useState([]);
