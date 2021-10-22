@@ -32,13 +32,13 @@ const reducer = (state = initialState, action) => {
       };
     case 'DELETE_RESTAURANT':
       let copy = [...state.userRestaurants];
-      const filteredCopy = copy.filter((restaurant) => {
+      copy.filter((restaurant) => {
         return restaurant.photo !== action.payload.resId;
       });
 
       return {
         ...state,
-        userRestaurants: filteredCopy,
+        userRestaurants: copy,
       };
     case 'SORT_BY_PRICE':
       let priceCopy = [...state.userRestaurants];
