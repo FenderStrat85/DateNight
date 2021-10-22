@@ -7,7 +7,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN':
-      // console.log('I am in the reducer');
       return {
         ...state,
         isAuthenticated: true,
@@ -15,7 +14,6 @@ const reducer = (state = initialState, action) => {
         user_id: action.payload._id,
       };
     case 'REGISTER':
-      // console.log('I am in the reducer');
       return {
         ...state,
         isAuthenticated: true,
@@ -28,7 +26,6 @@ const reducer = (state = initialState, action) => {
         isAuthenticated: false,
       };
     case 'SAVE_RESTAURANT':
-      // console.log(action.payload);
       return {
         ...state,
         userRestaurants: [...state.userRestaurants, action.payload],

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import ImagePreview from '../components/ImagePreview';
@@ -33,14 +33,6 @@ function SavedRestaurantItemScreen(props) {
       .then((res) => res.json())
       .then((item) => {
         let updatedRestaurantInfo = item;
-        console.log(
-          'updatedRestaurantInfo in savedItemScreen',
-          updatedRestaurantInfo,
-        );
-        console.log(
-          'display of restaurant dat from reducer',
-          resDataFromReducer,
-        );
         dispatch({ type: 'DELETE_RESTAURANT', payload: updatedRestaurantInfo });
       })
       .catch((error) => console.log(error));

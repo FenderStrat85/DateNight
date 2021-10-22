@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { BACKEND_SERVER } from '@env';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
 
-function LoginScreen(props) {
+function LoginScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -80,21 +80,7 @@ function LoginScreen(props) {
           secureTextEntry
         />
       </View>
-      {/* <View style={styles.button}>
-        <Button
-          color={Colours.primaryColour}
-          title="Sign In"
-          onPress={() => login(email, password)}
-        />
-      </View> */}
       <CustomButton onPress={() => login(email, password)} label="Sign In" />
-      {/* <View style={styles.button}>
-        <Button
-          color={Colours.primaryColour}
-          title="Create Account"
-          onPress={() => register(email, password)}
-        />
-      </View> */}
       <CustomButton
         onPress={() => register(email, password)}
         label="Create Account"
@@ -123,7 +109,6 @@ const styles = StyleSheet.create({
   },
   inputView: {
     backgroundColor: '#FFC0CB',
-    // backgroundColor: Colours.primaryColour,
     borderRadius: 30,
     width: '70%',
     height: 45,

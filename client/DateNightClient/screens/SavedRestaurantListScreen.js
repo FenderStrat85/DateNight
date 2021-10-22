@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Button,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
@@ -19,11 +18,6 @@ function SavedRestaurantListScreen(props) {
     return state.user.userRestaurants;
   });
   const [restaurantList, setRestaurantList] = useState();
-
-  console.log(
-    'SavedRestaurantListScreen userRestaurants.length',
-    userRestaurants.length,
-  );
 
   const dispatch = useDispatch();
 
@@ -89,13 +83,11 @@ function SavedRestaurantListScreen(props) {
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
-            {/* <Button title="Sort by price" onPress={() => sortByPrice()} /> */}
             <CustomButton
               style={styles.button}
               onPress={() => sortByPrice()}
               label="Sort by Price"
             />
-            {/* <Button title="Sort by rating" onPress={() => sortByRating()} /> */}
             <CustomButton
               style={styles.button}
               onPress={() => sortByRating()}
@@ -106,7 +98,6 @@ function SavedRestaurantListScreen(props) {
             <FlatList
               contentContainerStyle={styles.flatList}
               keyExtractor={(item, index) => 'item' + index}
-              // data={restaurantList}
               data={userRestaurants}
               renderItem={renderSavedRestaurantGrid}
             />
@@ -142,7 +133,6 @@ const styles = StyleSheet.create({
     height: 150,
     width: 320,
     height: 200,
-    // overflow: 'hidden',
   },
   titleText: { marginBottom: 20 },
   containerItem: {

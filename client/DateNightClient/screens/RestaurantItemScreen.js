@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Button,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import ImagePreview from '../components/ImagePreview';
 import MapPreview from '../components/MapPreview';
-import { API_KEY, BACKEND_SERVER } from '@env';
-import RestaurantListScreen from './RestaurantListScreen';
+import { BACKEND_SERVER } from '@env';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Ionicons } from '@expo/vector-icons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { useDispatch, useSelector } from 'react-redux';
 import Colours from '../constants/Colours';

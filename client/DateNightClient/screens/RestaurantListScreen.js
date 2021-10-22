@@ -3,23 +3,18 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { API_KEY, MESSAGE } from '@env';
-import DATA from '../dummyData';
+import { API_KEY } from '@env';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
-import CustomHeaderButton from '../components/CustomHeaderButton';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 function RestaurantListScreen(props) {
   const selectedCuisine = props.route.params.paramKey.selectedCuisine;
   const longitude = props.route.params.paramKey.chosenLocation.long;
   const latitude = props.route.params.paramKey.chosenLocation.lat;
   const distance = props.route.params.paramKey.chosenDistance;
-  const price = props.route.params.paramKey.price_level;
 
   const [restaurantList, setRestaurantList] = useState();
 
@@ -35,15 +30,6 @@ function RestaurantListScreen(props) {
         console.log(error);
       });
   };
-
-  //using dummy data
-  // const getRestaurantsHandler = async () => {
-  //   let resArr = [];
-  //   DATA.results.forEach((item) => {
-  //     resArr.push(item);
-  //   });
-  //   setRestaurantList(resArr);
-  // };
 
   const sortByRating = () => {
     let copy = [...restaurantList];
@@ -162,13 +148,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  // flatListContainer: {
-  //   flex: 1,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   width: '50%',
-  //   backgroundColor: 'orange',
-  // },
   flatList: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -193,7 +172,6 @@ const styles = StyleSheet.create({
     height: 150,
     width: 320,
     height: 200,
-    // overflow: 'hidden',
   },
   titleText: { marginBottom: 20 },
   containerItem: {
