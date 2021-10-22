@@ -3,18 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   ActivityIndicator,
   Alert,
   TextInput,
-  Keyboard,
-  TouchableWithoutFeedback,
-  FlatList,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CustomHeaderButton from '../components/CustomHeaderButton';
 import MapPreview from '../components/MapPreview';
 import InputSpinner from 'react-native-input-spinner';
 import * as Location from 'expo-location';
@@ -22,13 +17,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BACKEND_SERVER } from '@env';
 import Colours from '../constants/Colours';
 import CustomButton from '../components/CustomButton';
-import { MaterialIcons } from '@expo/vector-icons';
 import LogoutButton from '../components/LogoutButton';
 
 function HomeScreen(props) {
-  //need to add functionality to get selected radius from user
-  //this will be passed through params
+  //cusine from the users input
   const [selectedCuisine, setSelectedCuisine] = useState();
+  //array of all cuisines inputted that is passed onto the spinner screen
   const [cuisineToPass, setCuisineToPass] = useState([]);
 
   const [isFetching, setIsFetching] = useState();
@@ -63,11 +57,9 @@ function HomeScreen(props) {
     }
     try {
       setIsFetching(true);
-      console.log('fetching your location');
       const location = await Location.getCurrentPositionAsync({
         timeout: 5000,
       });
-      console.log(location);
       setSelectedLocation({
         lat: location.coords.latitude,
         long: location.coords.longitude,
@@ -81,7 +73,6 @@ function HomeScreen(props) {
   };
 
   const getSelectedLocationHandler = async () => {
-    console.log(userTypedLocation);
     if (!userTypedLocation) {
       Alert.alert(`Please enter a place`);
       return;
@@ -91,12 +82,10 @@ function HomeScreen(props) {
       const location = await Location.geocodeAsync(userTypedLocation, {
         timeout: 5000,
       });
-      // console.log(location);
       setSelectedLocation({
         lat: location[0].latitude,
         long: location[0].longitude,
       });
-      console.log(selectedLocation);
       setIsFetching(false);
     } catch (error) {
       Alert.alert(
@@ -107,7 +96,6 @@ function HomeScreen(props) {
   };
 
   const cuisineChoiceHandler = () => {
-    console.log(selectedCuisine);
     if (!selectedCuisine) {
       Alert.alert('Please enter a cuisine type');
       return;
