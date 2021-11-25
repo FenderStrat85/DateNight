@@ -68,9 +68,11 @@ You will need to have MongoDB installed on your machine.
 
 3. `datenight/server % npm install`
 
-4. 4. Create `server/.env` using `server/.env.example` as a template
+4. Create `server/.env` using `server/.env.example` as a template
 
 5. Create `client/datenightclient/.env` using `client/datenightclient/.env.example` as a template
+
+6. Take the knob.png file located in `client/datenightclient/assests/images/knob.png` and add this to the images file inside of React Native Wheel of Fortune package in the node modules (Unfortunately an issue with the package).
 
 ### Backend
 
