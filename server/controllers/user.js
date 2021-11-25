@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { User, Restaurant } = require('../models/models');
 
 const create = async (req, res) => {
